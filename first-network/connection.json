@@ -1,8 +1,7 @@
 {
-    "name": "mychannel",
+    "name": "byfn-network",
     "x-type": "hlfv1",
     "version": "1.0.0",
-    "tlsEnabled": true,
     "client": {
         "organization": "Org1",
         "connection": {
@@ -14,6 +13,7 @@
             }
         }
     },
+    "tlsEnable": true,
     "channels": {
         "mychannel": {
             "orderers": [
@@ -72,7 +72,7 @@
                 "ssl-target-name-override": "orderer.example.com"
             },
             "tlsCACerts": {
-                "path": "../../first-network/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem"
+                "pem": "tlsca.example-cert"
             }
         }
     },
@@ -84,7 +84,7 @@
                 "ssl-target-name-override": "peer0.org1.example.com"
             },
             "tlsCACerts": {
-                "path": "../../first-network/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem"
+                "pem": "tlsca.org1.example.com-cert"
             }
         },
         "peer1.org1.example.com": {
@@ -94,7 +94,7 @@
                 "ssl-target-name-override": "peer1.org1.example.com"
             },
             "tlsCACerts": {
-                "path": "../../first-network/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem"
+                "pem": "tlsca.org1.example.com-cert"
             }
         },
         "peer0.org2.example.com": {
@@ -104,7 +104,7 @@
                 "ssl-target-name-override": "peer0.org2.example.com"
             },
             "tlsCACerts": {
-                "path": "../../first-network/crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem"
+                "pem": "tlsca.org2.example.com-cert"
             }
         },
         "peer1.org2.example.com": {
@@ -114,7 +114,7 @@
                 "ssl-target-name-override": "peer1.org2.example.com"
             },
             "tlsCACerts": {
-                "path": "../../first-network/crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem"
+                "pem": "tlsca.org2.example.com-cert"
             }
         }
     },

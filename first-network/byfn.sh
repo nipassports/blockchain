@@ -486,9 +486,7 @@ COMPOSE_FILE_COUCH=docker-compose-couch.yaml
 COMPOSE_FILE_ORG3=docker-compose-org3.yaml
 # kafka and zookeeper compose file
 COMPOSE_FILE_KAFKA=docker-compose-kafka.yaml
-CA_FILE=docker-compose-e2e.yaml
 #
-
 # use golang as the default language for chaincode
 LANGUAGE=golang
 # default image tag
