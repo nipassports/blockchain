@@ -42,8 +42,7 @@ rm -rf ./hfc-key-store
 # ./start.sh
 
 cd javascript/wallet
-rm -rf admin
-rm -rf user1
+rm -rf *
 
 cd ../..
 
