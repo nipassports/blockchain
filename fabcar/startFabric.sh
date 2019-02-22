@@ -41,6 +41,14 @@ rm -rf ./hfc-key-store
 # cd ../basic-network
 # ./start.sh
 
+cd javascript/wallet
+rm -rf admin
+rm -rf user1
+
+cd ../..
+
+docker rm -f $(docker ps -aq)
+
 cd ../first-network
 ./byfn.sh down
 ./byfn.sh up

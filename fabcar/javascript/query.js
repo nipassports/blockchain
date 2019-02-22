@@ -30,17 +30,15 @@ async function main() {
 
         // Create a new gateway for connecting to our peer node.
         const gateway = new Gateway();
-        console.log('1');
         await gateway.connect(ccp, { wallet, identity: 'user1', discovery: { enabled: false } });
-        console.log('1');
+        
 
         // Get the network (channel) our contract is deployed to.
         const network = await gateway.getNetwork('mychannel');
-        console.log('1');
+        
 
         // Get the contract from the network.
         const contract = network.getContract('mycc');
-        console.log('1');
 
         // Evaluate the specified transaction.
         // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
