@@ -7,7 +7,7 @@ Exécuter les lignes suivantes :
 
 cd fabcar
 
-.startFabric.sh
+./startFabric.sh
 
 cd javascript
 
