@@ -11,7 +11,13 @@
                 },
                 "orderer": "300"
             }
+        },
+    "credentialStore": {
+        "path": "./hfc-key-store",
+        "cryptoStore": {
+        "path": "./hfc-key-store"
         }
+    }
     },
     "tlsEnable": true,
     "channels": {
@@ -52,7 +58,13 @@
             ],
             "certificateAuthorities": [
                 "ca.org1.example.com"
-            ]
+            ], 
+            "adminPrivateKey": {
+                "path": "../../first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/96155a93168b08eca41da1a898ae40813e27a2e4d83326362146a88b6ab1d44d_sk"
+            }, 
+            "signedCert": {
+                "path": "../../first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem"
+            }
         },
         "Org2": {
             "mspid": "Org2MSP",
@@ -72,7 +84,7 @@
                 "ssl-target-name-override": "orderer.example.com"
             },
             "tlsCACerts": {
-                "pem": "tlsca.example-cert"
+                "path": "../../first-network/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem"
             }
         }
     },
@@ -84,7 +96,7 @@
                 "ssl-target-name-override": "peer0.org1.example.com"
             },
             "tlsCACerts": {
-                "pem": "tlsca.org1.example.com-cert"
+                "path": "../../first-network/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem"
             }
         },
         "peer1.org1.example.com": {
@@ -94,7 +106,7 @@
                 "ssl-target-name-override": "peer1.org1.example.com"
             },
             "tlsCACerts": {
-                "pem": "tlsca.org1.example.com-cert"
+                "path": "../../first-network/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem"
             }
         },
         "peer0.org2.example.com": {
@@ -104,7 +116,7 @@
                 "ssl-target-name-override": "peer0.org2.example.com"
             },
             "tlsCACerts": {
-                "pem": "tlsca.org2.example.com-cert"
+                "path": "../../first-network/crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem"
             }
         },
         "peer1.org2.example.com": {
@@ -114,7 +126,7 @@
                 "ssl-target-name-override": "peer1.org2.example.com"
             },
             "tlsCACerts": {
-                "pem": "tlsca.org2.example.com-cert"
+                "path": "../../first-network/crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem"
             }
         }
     },
@@ -124,13 +136,20 @@
             "caName": "ca-org1",
             "httpOptions": {
                 "verify": false
+            }, 
+            "tlsCACerts": {
+                "path": "../../first-network/crypto-config/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem"
             }
+
         },
         "ca.org2.example.com": {
             "url": "https://localhost:8054",
             "caName": "ca-org2",
             "httpOptions": {
                 "verify": false
+            }, 
+            "tlsCACerts": {
+                "path": "../../first-network/crypto-config/peerOrganizations/org2.example.com/ca/ca.org2.example.com-cert.pem"
             }
         }
     }
