@@ -5,7 +5,10 @@
 
 Exécuter les lignes suivantes : 
 
-./fabcar/startFabric.sh
+cd fabcar
 
+.startFabric.sh
 
-./fabcar/javascript/action.sh
+cd javascript
+
+./action.sh
