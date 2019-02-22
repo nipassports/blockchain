@@ -53,6 +53,9 @@ cd ../first-network
 ./byfn.sh down
 ./byfn.sh up
 
+cd scripts
+./connexion_update.sh
+
 # Now launch the CLI container in order to install, instantiate chaincode
 # and prime the ledger with our 10 cars
 # docker-compose -f ./docker-compose-cli.yaml up -d
