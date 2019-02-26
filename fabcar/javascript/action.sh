@@ -1,5 +1,6 @@
 #!/bin/bash
 
+nvm use 8
 npm install
 
 node enrollAdmin.js
