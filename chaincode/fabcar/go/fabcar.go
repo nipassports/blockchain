@@ -44,10 +44,23 @@ type SmartContract struct {
 
 // Define the passport structure, with 4 properties.  Structure tags are used by encoding/json library
 type Passport struct {
-	Gender     string `json:"gender"`
-	Birthplace string `json:"birthplace"`
-	Colour     string `json:"colour"`
-	Owner      string `json:"owner"`
+	Type         string  `json:"type"`
+	CountryCode  string  `json:"countryCode"`
+	PassNb       string  `json:"passNb"`
+	Name         string  `json:"name"`
+	Surname      string  `json:"surname"`
+	DateOfBirth  string  `json:"dateOfBirth"`
+	Nationality  string  `json:"nationality"`
+	Sex          string  `json:"sex"`
+	PlaceOfBirth string  `json:"placeOfBirth"`
+	Height       float64 `json:"height"`
+	Autority     string  `json:"autority"`
+	Residence    string  `json:"residence"`
+	EyesColor    string  `json:"eyesColor"`
+	DateOfExpiry string  `json:"dateOfExpiry"`
+	DateOfIssue  string  `json:"dateOfIssue"`
+	PassOrigin   string  `json:"passOrigin"`
+	Validity     string  `json:"validity"`
 }
 
 /*
@@ -93,10 +106,12 @@ func (s *SmartContract) queryPassport(APIstub shim.ChaincodeStubInterface, args 
 }
 
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
+
+	taille := 1.65
 	passports := []Passport{
-		Passport{Gender: "Female", Birthplace: "Paris", Colour: "blue", Owner: "Tomoko"},
-		Passport{Gender: "Male", Birthplace: "Metz", Colour: "red", Owner: "Brad"},
-		Passport{Gender: "Female", Birthplace: "Bordeaux", Colour: "green", Owner: "Jin Soo"},
+		Passport{Type: "P", CountryCode: "FR", PassNb: "14ML52147", Name: "Jean", Surname: "Dupont", DateOfBirth: "10/05/1995", Nationality: "France", Sex: "M", PlaceOfBirth: "Toulouse", Height: taille, Autority: "Préfecture de ", Residence: "Avenue des Facultés, 33400 Talence", EyesColor: "Marron", DateOfExpiry: "16/02/2023", DateOfIssue: "25/01/2015", PassOrigin: "France", Validity: "Valide"},
+		Passport{Type: "P", CountryCode: "FR", PassNb: "14ML52147", Name: "Brad", Surname: "Dupont", DateOfBirth: "10/05/1995", Nationality: "France", Sex: "M", PlaceOfBirth: "Toulouse", Height: taille, Autority: "Préfecture de ", Residence: "Avenue des Facultés, 33400 Talence", EyesColor: "Marron", DateOfExpiry: "16/02/2023", DateOfIssue: "25/01/2015", PassOrigin: "France", Validity: "Valide"},
+		Passport{Type: "P", CountryCode: "FR", PassNb: "14ML52147", Name: "Jin Soo", Surname: "Dupont", DateOfBirth: "10/05/1995", Nationality: "France", Sex: "M", PlaceOfBirth: "Toulouse", Height: taille, Autority: "Préfecture de ", Residence: "Avenue des Facultés, 33400 Talence", EyesColor: "Marron", DateOfExpiry: "16/02/2023", DateOfIssue: "25/01/2015", PassOrigin: "France", Validity: "Valide"},
 	}
 
 	i := 0
@@ -117,7 +132,9 @@ func (s *SmartContract) createPassport(APIstub shim.ChaincodeStubInterface, args
 		return shim.Error("Incorrect number of arguments. Expecting 5")
 	}
 
-	var passport = Passport{Gender: args[1], Birthplace: args[2], Colour: args[3], Owner: args[4]}
+	taille, _ := strconv.ParseFloat(args[10], 64)
+
+	var passport = Passport{Type: args[1], CountryCode: args[2], PassNb: args[3], Name: args[4], Surname: args[5], DateOfBirth: args[6], Nationality: args[7], Sex: args[8], PlaceOfBirth: args[9], Height: taille, Autority: args[11], Residence: args[12], EyesColor: args[13], DateOfExpiry: args[14], DateOfIssue: args[15], PassOrigin: args[16], Validity: args[17]}
 
 	passportAsBytes, _ := json.Marshal(passport)
 	APIstub.PutState(args[0], passportAsBytes)
@@ -150,12 +167,12 @@ func (s *SmartContract) queryAllPassports(APIstub shim.ChaincodeStubInterface) s
 		if bArrayMemberAlreadyWritten == true {
 			buffer.WriteString(",")
 		}
-		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("{\"id\":")
 		buffer.WriteString("\"")
 		buffer.WriteString(queryResponse.Key)
 		buffer.WriteString("\"")
 
-		buffer.WriteString(", \"Record\":")
+		buffer.WriteString(", \"infos\":")
 		// Record is a JSON object, so we write as-is
 		buffer.WriteString(string(queryResponse.Value))
 		buffer.WriteString("}")
@@ -178,7 +195,7 @@ func (s *SmartContract) changePassportOwner(APIstub shim.ChaincodeStubInterface,
 	passport := Passport{}
 
 	json.Unmarshal(passportAsBytes, &passport)
-	passport.Owner = args[1]
+	passport.Name = args[1]
 
 	passportAsBytes, _ = json.Marshal(passport)
 	APIstub.PutState(args[0], passportAsBytes)
