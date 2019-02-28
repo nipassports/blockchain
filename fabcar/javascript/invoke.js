@@ -41,7 +41,7 @@ async function main() {
         // Submit the specified transaction.
         // createCar transaction - requires 5 argument, ex: ('createCar', 'CAR12', 'Honda', 'Accord', 'Black', 'Tom')
         // changeCarOwner transaction - requires 2 args , ex: ('changeCarOwner', 'CAR10', 'Dave')
-        await contract.submitTransaction('createPassport', '4', 'Honda', 'Accord', 'Black', 'Tom');
+        await contract.submitTransaction('createPassport', 'P', 'FR', "35ML44147", 'brad', 'davincy','10/04/1985', 'France', 'M', 'Toulouse','1.65','Préfecture de ', 'Avenue des Facultés, 33400 Talence', 'Marron', '16/02/2023','25/01/2015','France', 'Valide');
         console.log('Transaction has been submitted');
 
         // Disconnect from the gateway.
