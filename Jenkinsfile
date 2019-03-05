@@ -28,7 +28,7 @@ pipeline {
     }
     stage('Export connection file') {
       steps {
-        sh 'cp first-network/connection.js /tmp/connection.js -f'
+        sh 'cp first-network/connection.json /tmp/connection.js -f'
       }
     }
   }
