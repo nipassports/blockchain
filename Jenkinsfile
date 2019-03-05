@@ -9,7 +9,7 @@ pipeline {
     }
     stage('Start Fabric') {
       steps {
-        dir(path: 'fabcar')
+        sh 'cd fabcar'
         sh './startFabric.sh'
       }
     }
