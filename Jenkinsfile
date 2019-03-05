@@ -9,8 +9,7 @@ pipeline {
     }
     stage('Start Fabric') {
       steps {
-        sh 'cd fabcar'
-        sh './startFabric.sh'
+        sh 'cd fabcar && ./startFabric.sh'
       }
     }
   }
