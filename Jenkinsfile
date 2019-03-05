@@ -26,10 +26,5 @@ pipeline {
         sh 'cd fabcar && ./startFabric.sh'
       }
     }
-    stage('Export connection file') {
-      steps {
-        sh 'cp first-network/connection.json /tmp/connection.json -f'
-      }
-    }
   }
 }
