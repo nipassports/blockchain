@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Clean') {
           steps {
-            sh 'docker rmi -f $(docker images | grep hyperledger | awk \'{print $3}\')'
+            sh 'docker rmi -f $(docker images | grep hyperledger | awk \'{print $3}\') | exit 0'
           }
         }
       }
