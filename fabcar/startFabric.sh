@@ -40,7 +40,7 @@ rm -rf ./hfc-key-store
 cd javascript/wallet
 rm -rf *
 
-#cd ../..
+cd ../..
 
 cd ../first-network
 ./byfn.sh down
