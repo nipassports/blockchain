@@ -25,7 +25,7 @@ pipeline {
     stage('Start Fabric') {
       steps {
         sh 'cd fabcar && ./startFabric.sh'
-        sh 'actionsPostStart.sh'
+        sh 'cd fabcar && ./actionsPostStart.sh'
       }
     }
   }
