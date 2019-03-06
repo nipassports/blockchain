@@ -49,5 +49,5 @@ cd ../first-network
 cd scripts
 ./connexion_update.sh
 
-
-
+cd ../../
+cd fabcar
