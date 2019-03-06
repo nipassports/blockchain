@@ -51,3 +51,4 @@ cd scripts
 
 cd ../../
 cd fabcar
+pwd
