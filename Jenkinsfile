@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Stop Fabric') {
       parallel {
-        stage('Stop Fabric') {
+        stage('Stop') {
           steps {
             sh 'docker rm -f $(docker ps | grep nip -v | cut -d" " -f1 | tail -n +2) | exit 0'
             sh 'docker rmi -f $(docker images | grep fabcar | awk \'{print $3}\') | exit 0'
@@ -25,6 +25,7 @@ pipeline {
     stage('Start Fabric') {
       steps {
         sh 'cd fabcar && ./startFabric.sh'
+        sh 'actionsPostStart.sh'
       }
     }
   }

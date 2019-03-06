@@ -37,9 +37,8 @@ fi
 # clean the keystore
 rm -rf ./hfc-key-store
 
-# Pour DEV local seulement
-#cd javascript/wallet
-#rm -rf *
+cd javascript/wallet
+rm -rf *
 
 #cd ../..
 
