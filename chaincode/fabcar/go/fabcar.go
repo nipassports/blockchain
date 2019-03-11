@@ -89,6 +89,8 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.createPassport(APIstub, args)
 	} else if function == "queryAllPassports" {
 		return s.queryAllPassports(APIstub)
+	} else if function == "queryPassportsByPassNb" { //find marbles for owner X using rich query
+		return s.queryPassportsByPassNb(APIstub, args)
 	} else if function == "changePassportOwner" {
 		return s.changePassportOwner(APIstub, args)
 	}
@@ -209,6 +211,23 @@ func (s *SmartContract) queryAllPassports(APIstub shim.ChaincodeStubInterface) s
 	return shim.Success(buffer.Bytes())
 }
 
+func (s *SmartContract) queryPassportsByPassNb(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) < 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	PassNb := args[0]
+
+	queryString := fmt.Sprintf("{\"selector\":{\"passNb\":\"%s\"}}", PassNb)
+
+	queryResults, err := getQueryResultForQueryString(APIstub, queryString)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	return shim.Success(queryResults)
+}
+
 func (s *SmartContract) changePassportOwner(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) != 2 {
@@ -225,6 +244,51 @@ func (s *SmartContract) changePassportOwner(APIstub shim.ChaincodeStubInterface,
 	APIstub.PutState(args[0], passportAsBytes)
 
 	return shim.Success(nil)
+}
+
+func getQueryResultForQueryString(APIstub shim.ChaincodeStubInterface, queryString string) ([]byte, error) {
+
+	resultsIterator, err := APIstub.GetQueryResult(queryString)
+	if err != nil {
+		return nil, err
+	}
+	defer resultsIterator.Close()
+
+	buffer, err := constructQueryResponseFromIterator(resultsIterator)
+	if err != nil {
+		return nil, err
+	}
+
+	return buffer.Bytes(), nil
+}
+
+func constructQueryResponseFromIterator(resultsIterator shim.StateQueryIteratorInterface) (*bytes.Buffer, error) {
+	// buffer is a JSON array containing QueryResults
+	var buffer bytes.Buffer
+
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return nil, err
+		}
+		// Add a comma before array members, suppress it for the first array member
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		buffer.WriteString("{\"id\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"infos\":")
+		// Record is a JSON object, so we write as-is
+		buffer.WriteString(string(queryResponse.Value))
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+
+	return &buffer, nil
 }
 
 // The main function is only relevant in unit test mode. Only included here for completeness.
