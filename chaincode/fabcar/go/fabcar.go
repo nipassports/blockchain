@@ -91,6 +91,8 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.queryAllPassports(APIstub)
 	} else if function == "queryPassportsByPassNb" { //find marbles for owner X using rich query
 		return s.queryPassportsByPassNb(APIstub, args)
+	} else if function == "validNumPwd" { //find marbles for owner X using rich query
+		return s.validNumPwd(APIstub, args)
 	} else if function == "changePassportOwner" {
 		return s.changePassportOwner(APIstub, args)
 	}
@@ -226,6 +228,29 @@ func (s *SmartContract) queryPassportsByPassNb(APIstub shim.ChaincodeStubInterfa
 		return shim.Error(err.Error())
 	}
 	return shim.Success(queryResults)
+}
+
+func (s *SmartContract) validNumPwd(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 2 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
+	}
+	var buffer bytes.Buffer
+
+	PassNb := args[0]
+	Pwd := args[1]
+	queryString := fmt.Sprintf("{\"selector\":{\"passNb\":\"%s\",\"password\":\"%s\"}}", PassNb, Pwd)
+
+	queryResults, err := getQueryResultForQueryString(APIstub, queryString)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	if queryResults != nil {
+		buffer.WriteString("true")
+		return shim.Success(buffer.Bytes())
+	}
+	buffer.WriteString("false")
+	return shim.Success(buffer.Bytes())
 }
 
 func (s *SmartContract) changePassportOwner(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
