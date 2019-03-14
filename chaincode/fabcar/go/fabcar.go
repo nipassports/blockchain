@@ -62,6 +62,7 @@ type Passport struct {
 	PassOrigin   string  `json:"passOrigin"`
 	Validity     string  `json:"validity"`
 	Password     string  `json:"password"`
+	Image        string  `json:"image"`
 }
 
 /*
@@ -114,9 +115,9 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 
 	taille := 1.65
 	passports := []Passport{
-		Passport{Type: "P", CountryCode: "FR", PassNb: "14ML52147", Name: "Jean", Surname: "Dupont", DateOfBirth: "16/09/1985", Nationality: "France", Sex: "M", PlaceOfBirth: "Toulouse", Height: taille, Autority: "Préfecture de ", Residence: "Avenue des Facultés, 33400 Talence", EyesColor: "Marron", DateOfExpiry: "16/02/2023", DateOfIssue: "25/11/2013", PassOrigin: "France", Validity: "Valide", Password: "Password1"},
-		Passport{Type: "P", CountryCode: "FR", PassNb: "14ML22389", Name: "Brad", Surname: "Dupont", DateOfBirth: "10/03/1975", Nationality: "France", Sex: "M", PlaceOfBirth: "Toulouse", Height: taille, Autority: "Préfecture de ", Residence: "Avenue des Facultés, 33400 Talence", EyesColor: "Marron", DateOfExpiry: "16/02/2023", DateOfIssue: "5/07/2017", PassOrigin: "France", Validity: "Valide", Password: "Password2"},
-		Passport{Type: "P", CountryCode: "FR", PassNb: "14ML66146", Name: "Jin Soo", Surname: "Dupont", DateOfBirth: "1/05/2000", Nationality: "France", Sex: "M", PlaceOfBirth: "Toulouse", Height: taille, Autority: "Préfecture de ", Residence: "Avenue des Facultés, 33400 Talence", EyesColor: "Marron", DateOfExpiry: "16/02/2023", DateOfIssue: "2/01/2015", PassOrigin: "France", Validity: "Valide", Password: "Password3"},
+		Passport{Type: "P", CountryCode: "FR", PassNb: "14ML52147", Name: "Jean", Surname: "Dupont", DateOfBirth: "16/09/1985", Nationality: "France", Sex: "M", PlaceOfBirth: "Toulouse", Height: taille, Autority: "Préfecture de ", Residence: "Avenue des Facultés, 33400 Talence", EyesColor: "Marron", DateOfExpiry: "16/02/2023", DateOfIssue: "25/11/2013", PassOrigin: "France", Validity: "Valide", Password: "Password1", Image: "testimage"},
+		Passport{Type: "P", CountryCode: "FR", PassNb: "14ML22389", Name: "Brad", Surname: "Dupont", DateOfBirth: "10/03/1975", Nationality: "France", Sex: "M", PlaceOfBirth: "Toulouse", Height: taille, Autority: "Préfecture de ", Residence: "Avenue des Facultés, 33400 Talence", EyesColor: "Marron", DateOfExpiry: "16/02/2023", DateOfIssue: "5/07/2017", PassOrigin: "France", Validity: "Valide", Password: "Password2", Image: "testimage"},
+		Passport{Type: "P", CountryCode: "FR", PassNb: "14ML66146", Name: "Jin Soo", Surname: "Dupont", DateOfBirth: "1/05/2000", Nationality: "France", Sex: "M", PlaceOfBirth: "Toulouse", Height: taille, Autority: "Préfecture de ", Residence: "Avenue des Facultés, 33400 Talence", EyesColor: "Marron", DateOfExpiry: "16/02/2023", DateOfIssue: "2/01/2015", PassOrigin: "France", Validity: "Valide", Password: "Password3", Image: "testimage"},
 	}
 
 	i := 0
@@ -162,7 +163,7 @@ func (s *SmartContract) createPassport(APIstub shim.ChaincodeStubInterface, args
 
 	taille, _ := strconv.ParseFloat(args[9], 64)
 
-	var passport = Passport{Type: args[0], CountryCode: args[1], PassNb: args[2], Name: args[3], Surname: args[4], DateOfBirth: args[5], Nationality: args[6], Sex: args[7], PlaceOfBirth: args[8], Height: taille, Autority: args[10], Residence: args[11], EyesColor: args[12], DateOfExpiry: args[13], DateOfIssue: args[14], PassOrigin: args[15], Validity: args[16], Password: args[17]}
+	var passport = Passport{Type: args[0], CountryCode: args[1], PassNb: args[2], Name: args[3], Surname: args[4], DateOfBirth: args[5], Nationality: args[6], Sex: args[7], PlaceOfBirth: args[8], Height: taille, Autority: args[10], Residence: args[11], EyesColor: args[12], DateOfExpiry: args[13], DateOfIssue: args[14], PassOrigin: args[15], Validity: args[16], Password: args[17], Image: args[18]}
 
 	passportAsBytes, _ := json.Marshal(passport)
 	APIstub.PutState(strconv.Itoa(i), passportAsBytes)
