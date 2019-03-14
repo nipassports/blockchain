@@ -134,7 +134,7 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 
 func (s *SmartContract) createPassport(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	if len(args) != 18 {
+	if len(args) != 19 {
 		return shim.Error("Incorrect number of arguments. Expecting 18")
 	}
 
