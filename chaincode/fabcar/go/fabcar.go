@@ -163,12 +163,23 @@ func (s *SmartContract) createPassport(APIstub shim.ChaincodeStubInterface, args
 
 	taille, _ := strconv.ParseFloat(args[9], 64)
 
-	var passport = Passport{Type: args[0], CountryCode: args[1], PassNb: args[2], Name: args[3], Surname: args[4], DateOfBirth: args[5], Nationality: args[6], Sex: args[7], PlaceOfBirth: args[8], Height: taille, Autority: args[10], Residence: args[11], EyesColor: args[12], DateOfExpiry: args[13], DateOfIssue: args[14], PassOrigin: args[15], Validity: args[16], Password: args[17], Image: args[18]}
+	queryString := fmt.Sprintf("{\"selector\":{\"passNb\":\"%s\"}}", args[2])
 
-	passportAsBytes, _ := json.Marshal(passport)
-	APIstub.PutState(strconv.Itoa(i), passportAsBytes)
+	queryResults, err := getQueryResultForQueryString(APIstub, queryString)
 
-	return shim.Success(nil)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	if queryResults == nil {
+		var passport = Passport{Type: args[0], CountryCode: args[1], PassNb: args[2], Name: args[3], Surname: args[4], DateOfBirth: args[5], Nationality: args[6], Sex: args[7], PlaceOfBirth: args[8], Height: taille, Autority: args[10], Residence: args[11], EyesColor: args[12], DateOfExpiry: args[13], DateOfIssue: args[14], PassOrigin: args[15], Validity: args[16], Password: args[17], Image: args[18]}
+		passportAsBytes, _ := json.Marshal(passport)
+		APIstub.PutState(strconv.Itoa(i), passportAsBytes)
+		return shim.Success(nil)
+	} else {
+		return shim.Error(err.Error())
+	}
+
 }
 
 func (s *SmartContract) queryAllPassports(APIstub shim.ChaincodeStubInterface) sc.Response {
