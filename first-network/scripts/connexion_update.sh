@@ -5,6 +5,7 @@
 
 KEYORG1=$(ls ../crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/)
 KEYORG2=$(ls ../crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/)
+KEYORG3=$(ls ../org3-artifacts/crypto-config/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/keystore/)
 
 cd ..
 echo "{
@@ -12,7 +13,7 @@ echo "{
     \"x-type\": \"hlfv1\",
     \"version\": \"1.0.0\",
     \"client\": {
-        \"organization\": \"Org1\",
+        \"organizations\": \"Org1\"
         \"connection\": {
             \"timeout\": {
                 \"peer\": {
@@ -54,6 +55,16 @@ echo "{
                     \"endorsingPeer\": true,
                     \"chaincodeQuery\": true,
                     \"eventSource\": true
+                }, 
+                \"peer0.org3.example.com\": {
+                    \"endorsingPeer\": true,
+                    \"chaincodeQuery\": true,
+                    \"eventSource\": true
+                }, 
+                \"peer1.org3.example.com\": {
+                    \"endorsingPeer\": true,
+                    \"chaincodeQuery\": true,
+                    \"eventSource\": true
                 }
             }
         }
@@ -83,7 +94,29 @@ echo "{
             ],
             \"certificateAuthorities\": [
                 \"ca.org2.example.com\"
-            ]
+            ],
+            \"adminPrivateKey\": {
+                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/$KEYORG2\"
+            }, 
+            \"signedCert\": {
+                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts/Admin@org2.example.com-cert.pem\"
+            }
+        }, 
+        \"Org3\": {
+            \"mspid\": \"Org3MSP\",
+            \"peers\": [
+                \"peer0.org3.example.com\",
+                \"peer1.org3.example.com\"
+            ],
+            \"certificateAuthorities\": [
+                \"ca.org3.example.com\"
+            ],
+            \"adminPrivateKey\": {
+                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/keystore/$KEYORG3\"
+            }, 
+            \"signedCert\": {
+                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/signcerts/Admin@org3.example.com-cert.pem\"
+            }
         }
     },
     \"orderers\": {
@@ -137,6 +170,26 @@ echo "{
             \"tlsCACerts\": {
                 \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem\"
             }
+        },
+        \"peer0.org3.example.com\": {
+            \"url\": \"grpcs://localhost:11051\",
+            \"eventUrl\": \"grpcs://localhost:11053\",
+            \"grpcOptions\": {
+                \"ssl-target-name-override\": \"peer0.org3.example.com\"
+            },
+            \"tlsCACerts\": {
+                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem\"
+            }
+        },
+        \"peer1.org3.example.com\": {
+            \"url\": \"grpcs://localhost:12051\",
+            \"eventUrl\": \"grpcs://localhost:12053\",
+            \"grpcOptions\": {
+                \"ssl-target-name-override\": \"peer1.org3.example.com\"
+            },
+            \"tlsCACerts\": {
+                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem\"
+            }
         }
     },
     \"certificateAuthorities\": {
@@ -160,9 +213,22 @@ echo "{
             \"tlsCACerts\": {
                 \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.example.com/ca/ca.org2.example.com-cert.pem\"
             }
+        },
+        \"ca.org3.example.com\": {
+            \"url\": \"https://localhost:9054\",
+            \"caName\": \"ca-org3\",
+            \"httpOptions\": {
+                \"verify\": false
+            }, 
+            \"tlsCACerts\": {
+                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.example.com/ca/ca.org3.example.com-cert.pem\"
+            }
+
         }
     }
-}" > connection.json
+}
+
+" > connection.json
 
 
 
