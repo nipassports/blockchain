@@ -112,10 +112,10 @@ echo "{
                 \"ca.org3.example.com\"
             ],
             \"adminPrivateKey\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/keystore/$KEYORG3\"
+                \"path\": \"../../first-network/org3-artifacts/crypto-config/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/keystore/$KEYORG3\"
             }, 
             \"signedCert\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/signcerts/Admin@org3.example.com-cert.pem\"
+                \"path\": \"../../first-network//org3-artifacts/crypto-config/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/signcerts/Admin@org3.example.com-cert.pem\"
             }
         }
     },
@@ -178,7 +178,7 @@ echo "{
                 \"ssl-target-name-override\": \"peer0.org3.example.com\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem\"
+                \"path\": \"../../first-network/org3-artifacts/crypto-config/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem\"
             }
         },
         \"peer1.org3.example.com\": {
@@ -188,7 +188,7 @@ echo "{
                 \"ssl-target-name-override\": \"peer1.org3.example.com\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem\"
+                \"path\": \"../../first-network/org3-artifacts/crypto-config/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem\"
             }
         }
     },
@@ -221,7 +221,7 @@ echo "{
                 \"verify\": false
             }, 
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.example.com/ca/ca.org3.example.com-cert.pem\"
+                \"path\": \"../../first-network/org3-artifacts/crypto-config/peerOrganizations/org3.example.com/ca/ca.org3.example.com-cert.pem\"
             }
 
         }
