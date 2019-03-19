@@ -13,7 +13,7 @@ echo "{
     \"x-type\": \"hlfv1\",
     \"version\": \"1.0.0\",
     \"client\": {
-        \"organizations\": \"Org1\"
+        \"organization\": \"Org1\",
         \"connection\": {
             \"timeout\": {
                 \"peer\": {
