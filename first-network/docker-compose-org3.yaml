@@ -13,6 +13,22 @@ networks:
   byfn:
 
 services:
+  ca2:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-org3
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org3.example.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/f2274259967646dfabc376eb377c2133d2d2a357640fa89ca5479321ad848637_sk
+    ports:
+      - "9054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org3.example.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/f2274259967646dfabc376eb377c2133d2d2a357640fa89ca5479321ad848637_sk -b admin:adminpw -d'
+    volumes:
+      - ./org3-artifacts/crypto-config/peerOrganizations/org3.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerOrg3
+    networks:
+      - byfn
 
   peer0.org3.example.com:
     container_name: peer0.org3.example.com
@@ -90,3 +106,4 @@ services:
       - peer1.org3.example.com
     networks:
       - byfn
+

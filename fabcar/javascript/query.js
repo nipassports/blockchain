@@ -8,7 +8,7 @@ const { FileSystemWallet, Gateway } = require('fabric-network');
 const fs = require('fs');
 const path = require('path');
 
-const ccpPath = path.resolve(__dirname, '..', '..', 'first-network', 'connection.json');
+const ccpPath = path.resolve(__dirname, '..', '..', 'first-network', 'connection1.json');
 const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
 const ccp = JSON.parse(ccpJSON);
 
@@ -41,8 +41,9 @@ async function main() {
         // Evaluate the specified transaction.
         // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
         // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
-        const result = await contract.evaluateTransaction('validNumPwd','14ML22389','Password2');
-        //const result = await contract.evaluateTransaction('queryAllPassports');
+        //const result = await contract.evaluateTransaction('validNumPwd','14ML22389','Password2');
+        const result = await contract.evaluateTransaction('queryAllPassports');
+        //const result = await contract.evaluateTransaction('queryPassportsByPassNb', '14ML52187');
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
     } catch (error) {
