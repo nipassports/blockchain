@@ -8,12 +8,16 @@ const { FileSystemWallet, Gateway, X509WalletMixin } = require('fabric-network')
 const fs = require('fs');
 const path = require('path');
 
-const ccpPath = path.resolve(__dirname, '..', '..', 'first-network', 'connection3.json');
-const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
-const ccp = JSON.parse(ccpJSON);
+async function registeruser(orgnum,usernum,departnum) {
 
-async function main() {
+  const ccpPath = path.resolve(__dirname, '..', '..', 'first-network', 'connection'+orgnum+'.json');
+  const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
+  const ccp = JSON.parse(ccpJSON);
+
+
+
     try {
+
 
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), 'wallet');
@@ -21,37 +25,51 @@ async function main() {
         console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
-        const userExists = await wallet.exists('user3');
+        const userExists = await wallet.exists('user'+'('+orgnum+')'+usernum);
         if (userExists) {
-            console.log('An identity for the user "user1" already exists in the wallet');
+            console.log('An identity for the user "user'+'('+orgnum+')'+usernum+'" already exists in the wallet');
             return;
         }
 
         // Check to see if we've already enrolled the admin user.
-        const adminExists = await wallet.exists('admin3');
+        const adminExists = await wallet.exists('admin'+orgnum);
         if (!adminExists) {
-            console.log('An identity for the admin user "admin" does not exist in the wallet');
+            console.log('An identity for the admin user "admin'+orgnum+'" does not exist in the wallet');
             console.log('Run the enrollAdmin.js application before retrying');
             return;
         }
 
         // Create a new gateway for connecting to our peer node.
         const gateway = new Gateway();
-        await gateway.connect(ccp, { wallet, identity: 'admin3', discovery: { enabled: false } });
 
+        await gateway.connect(ccp, { wallet, identity: 'admin'+orgnum, discovery: { enabled: false } });
         // Get the CA client object from the gateway for interacting with the CA.
         const ca = gateway.getClient().getCertificateAuthority();
         const adminIdentity = gateway.getCurrentIdentity();
 
         // Register the user, enroll the user, and import the new identity into the wallet.
-        const secret = await ca.register({ affiliation: 'org3.department1', enrollmentID: 'user3', role: 'client' }, adminIdentity);
-        const enrollment = await ca.enroll({ enrollmentID: 'user3', enrollmentSecret: secret });
-        const userIdentity = X509WalletMixin.createIdentity('Org3MSP', enrollment.certificate, enrollment.key.toBytes());
-        wallet.import('user3', userIdentity);
-        console.log('Successfully registered and enrolled admin user "user3" and imported it into the wallet');
+        const secret = await ca.register({ affiliation: 'org'+orgnum+'.department'+departnum, enrollmentID: 'user'+'('+orgnum+')'+usernum, role: 'client' }, adminIdentity);
+        const enrollment = await ca.enroll({ enrollmentID: 'user'+'('+orgnum+')'+usernum, enrollmentSecret: secret });
+        const userIdentity = X509WalletMixin.createIdentity('Org'+orgnum+'MSP', enrollment.certificate, enrollment.key.toBytes());
+        wallet.import('user'+'('+orgnum+')'+usernum, userIdentity);
+        console.log('Successfully registered and enrolled admin user "user'+'('+orgnum+')'+usernum+'" and imported it into the wallet');
 
     } catch (error) {
-        console.error(`Failed to register user "user3": ${error}`);
+        console.error(`Failed to register user "user`+`(`+orgnum+`)`+usernum+`": ${error}`);
+        process.exit(1);
+    }
+}
+
+
+async function main() {
+    try {
+      //departmentnum=1 ou 2 && orgnum= 1 2 ou 3
+      registeruser('1','1','1');
+      registeruser('2','1','1');
+      registeruser('3','1','1');
+
+    } catch (error) {
+        console.error(`Failed to register user "user1": ${error}`);
         process.exit(1);
     }
 }
