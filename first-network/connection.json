@@ -45,16 +45,6 @@
                     "endorsingPeer": true,
                     "chaincodeQuery": true,
                     "eventSource": true
-                }, 
-                "peer0.org3.example.com": {
-                    "endorsingPeer": true,
-                    "chaincodeQuery": true,
-                    "eventSource": true
-                }, 
-                "peer1.org3.example.com": {
-                    "endorsingPeer": true,
-                    "chaincodeQuery": true,
-                    "eventSource": true
                 }
             }
         }
@@ -70,7 +60,7 @@
                 "ca.org1.example.com"
             ], 
             "adminPrivateKey": {
-                "path": "../../first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/e4e78f47ea228c02cc14cf06ad04e80ded154888b2fefcf574fab543db224e92_sk"
+                "path": "../../first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/8bf598654277dad31d25a963fd649ef55a1229fc58ec9847698afb106ff5c570_sk"
             }, 
             "signedCert": {
                 "path": "../../first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem"
@@ -84,29 +74,7 @@
             ],
             "certificateAuthorities": [
                 "ca.org2.example.com"
-            ],
-            "adminPrivateKey": {
-                "path": "../../first-network/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/ee66f9afb4a6b3487d06342c6a5f750aad466a83e56e777e9df1ba6458e85607_sk"
-            }, 
-            "signedCert": {
-                "path": "../../first-network/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts/Admin@org2.example.com-cert.pem"
-            }
-        }, 
-        "Org3": {
-            "mspid": "Org3MSP",
-            "peers": [
-                "peer0.org3.example.com",
-                "peer1.org3.example.com"
-            ],
-            "certificateAuthorities": [
-                "ca.org3.example.com"
-            ],
-            "adminPrivateKey": {
-                "path": "../../first-network/org3-artifacts/crypto-config/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/keystore/18189916ba1aed8c6f2c93b8b034290a573f22aaf5a359baa14999047404f91e_sk"
-            }, 
-            "signedCert": {
-                "path": "../../first-network/org3-artifacts/crypto-config/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/signcerts/Admin@org3.example.com-cert.pem"
-            }
+            ]
         }
     },
     "orderers": {
@@ -160,26 +128,6 @@
             "tlsCACerts": {
                 "path": "../../first-network/crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem"
             }
-        },
-        "peer0.org3.example.com": {
-            "url": "grpcs://localhost:11051",
-            "eventUrl": "grpcs://localhost:11053",
-            "grpcOptions": {
-                "ssl-target-name-override": "peer0.org3.example.com"
-            },
-            "tlsCACerts": {
-                "path": "../../first-network/org3-artifacts/crypto-config/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem"
-            }
-        },
-        "peer1.org3.example.com": {
-            "url": "grpcs://localhost:12051",
-            "eventUrl": "grpcs://localhost:12053",
-            "grpcOptions": {
-                "ssl-target-name-override": "peer1.org3.example.com"
-            },
-            "tlsCACerts": {
-                "path": "../../first-network/org3-artifacts/crypto-config/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem"
-            }
         }
     },
     "certificateAuthorities": {
@@ -203,19 +151,6 @@
             "tlsCACerts": {
                 "path": "../../first-network/crypto-config/peerOrganizations/org2.example.com/ca/ca.org2.example.com-cert.pem"
             }
-        },
-        "ca.org3.example.com": {
-            "url": "https://localhost:9054",
-            "caName": "ca-org3",
-            "httpOptions": {
-                "verify": false
-            }, 
-            "tlsCACerts": {
-                "path": "../../first-network/org3-artifacts/crypto-config/peerOrganizations/org3.example.com/ca/ca.org3.example.com-cert.pem"
-            }
-
         }
     }
 }
-
-
