@@ -96,6 +96,8 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.validNumPwd(APIstub, args)
 	} else if function == "changePassportOwner" {
 		return s.changePassportOwner(APIstub, args)
+	} else if function == "searchPassport" {
+		return s.searchPassport(APIstub, args)
 	}
 
 	return shim.Error("Invalid Smart Contract function name.")
@@ -234,6 +236,21 @@ func (s *SmartContract) queryPassportsByPassNb(APIstub shim.ChaincodeStubInterfa
 	PassNb := args[0]
 
 	queryString := fmt.Sprintf("{\"selector\":{\"passNb\":\"%s\"}}", PassNb)
+
+	queryResults, err := getQueryResultForQueryString(APIstub, queryString)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	return shim.Success(queryResults)
+}
+func (s *SmartContract) searchPassport(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+	CountryCode := args[0]
+
+	queryString := fmt.Sprintf("{\"selector\":{\"countryCode\":\"%s\"}}",CountryCode)
 
 	queryResults, err := getQueryResultForQueryString(APIstub, queryString)
 	if err != nil {

@@ -3,7 +3,7 @@
     "x-type": "hlfv1",
     "version": "1.0.0",
     "client": {
-        "organization": "Org1",
+        "organization": "Org2",
         "connection": {
             "timeout": {
                 "peer": {
@@ -70,7 +70,7 @@
                 "ca.org1.example.com"
             ], 
             "adminPrivateKey": {
-                "path": "../../first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/e4e78f47ea228c02cc14cf06ad04e80ded154888b2fefcf574fab543db224e92_sk"
+                "path": "../../first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/ed75c08b9d2cbaa2e09e14d09580694a05506f097c60e11140d198e08b9716ac_sk"
             }, 
             "signedCert": {
                 "path": "../../first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem"
@@ -86,7 +86,7 @@
                 "ca.org2.example.com"
             ],
             "adminPrivateKey": {
-                "path": "../../first-network/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/ee66f9afb4a6b3487d06342c6a5f750aad466a83e56e777e9df1ba6458e85607_sk"
+                "path": "../../first-network/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/8d417130358b2f98d688e5d5447f7d0531042783287ee5bbea5bf7a045afc98f_sk"
             }, 
             "signedCert": {
                 "path": "../../first-network/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts/Admin@org2.example.com-cert.pem"
@@ -102,10 +102,10 @@
                 "ca.org3.example.com"
             ],
             "adminPrivateKey": {
-                "path": "../../first-network/org3-artifacts/crypto-config/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/keystore/18189916ba1aed8c6f2c93b8b034290a573f22aaf5a359baa14999047404f91e_sk"
+                "path": "../../first-network/crypto-config/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/keystore/820fa6e7e6bd0296d2baaff311192a56e33d9f94f816d9870960a08d9211b2af_sk"
             }, 
             "signedCert": {
-                "path": "../../first-network/org3-artifacts/crypto-config/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/signcerts/Admin@org3.example.com-cert.pem"
+                "path": "../../first-network/crypto-config/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/signcerts/Admin@org3.example.com-cert.pem"
             }
         }
     },
@@ -168,7 +168,7 @@
                 "ssl-target-name-override": "peer0.org3.example.com"
             },
             "tlsCACerts": {
-                "path": "../../first-network/org3-artifacts/crypto-config/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem"
+                "path": "../../first-network/crypto-config/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem"
             }
         },
         "peer1.org3.example.com": {
@@ -178,7 +178,7 @@
                 "ssl-target-name-override": "peer1.org3.example.com"
             },
             "tlsCACerts": {
-                "path": "../../first-network/org3-artifacts/crypto-config/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem"
+                "path": "../../first-network/crypto-config/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem"
             }
         }
     },
@@ -211,7 +211,7 @@
                 "verify": false
             }, 
             "tlsCACerts": {
-                "path": "../../first-network/org3-artifacts/crypto-config/peerOrganizations/org3.example.com/ca/ca.org3.example.com-cert.pem"
+                "path": "../../first-network/crypto-config/peerOrganizations/org3.example.com/ca/ca.org3.example.com-cert.pem"
             }
 
         }
