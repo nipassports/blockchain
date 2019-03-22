@@ -45,7 +45,6 @@ cd ../..
 cd ../first-network
 ./byfn.sh down
 ./byfn.sh up
-# ./eyfn.sh up
 
 cd scripts
 ./connexion_update.sh
