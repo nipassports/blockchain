@@ -22,318 +22,335 @@
  * Writing Your First Blockchain Application
  */
 
-package main
+ package main
 
-/* Imports
- * 4 utility libraries for formatting, handling bytes, reading and writing JSON, and string manipulation
- * 2 specific Hyperledger Fabric specific libraries for Smart Contracts
- */
-import (
-	"bytes"
-	"encoding/json"
-	"fmt"
-	"strconv"
-
-	"github.com/hyperledger/fabric/core/chaincode/shim"
-	sc "github.com/hyperledger/fabric/protos/peer"
-)
-
-// Define the Smart Contract structure
-type SmartContract struct {
-}
-
-// Define the passport structure, with 4 properties.  Structure tags are used by encoding/json library
-type Passport struct {
-	Type         string  `json:"type"`
-	CountryCode  string  `json:"countryCode"`
-	PassNb       string  `json:"passNb"`
-	Name         string  `json:"name"`
-	Surname      string  `json:"surname"`
-	DateOfBirth  string  `json:"dateOfBirth"`
-	Nationality  string  `json:"nationality"`
-	Sex          string  `json:"sex"`
-	PlaceOfBirth string  `json:"placeOfBirth"`
-	Height       float64 `json:"height"`
-	Autority     string  `json:"autority"`
-	Residence    string  `json:"residence"`
-	EyesColor    string  `json:"eyesColor"`
-	DateOfExpiry string  `json:"dateOfExpiry"`
-	DateOfIssue  string  `json:"dateOfIssue"`
-	PassOrigin   string  `json:"passOrigin"`
-	Validity     string  `json:"validity"`
-	Password     string  `json:"password"`
-	Image        string  `json:"image"`
-}
-
-/*
- * The Init method is called when the Smart Contract "fabcar" is instantiated by the blockchain network
- * Best practice is to have any Ledger initialization in separate function -- see initLedger()
- */
-func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
-	return shim.Success(nil)
-}
-
-/*
- * The Invoke method is called as a result of an application request to run the Smart Contract "fabcar"
- * The calling application program has also specified the particular smart contract function to be called, with arguments
- */
-func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response {
-
-	// Retrieve the requested Smart Contract function and arguments
-	function, args := APIstub.GetFunctionAndParameters()
-	// Route to the appropriate handler function to interact with the ledger appropriately
-	if function == "queryPassport" {
-		return s.queryPassport(APIstub, args)
-	} else if function == "initLedger" {
-		return s.initLedger(APIstub)
-	} else if function == "createPassport" {
-		return s.createPassport(APIstub, args)
-	} else if function == "queryAllPassports" {
-		return s.queryAllPassports(APIstub)
-	} else if function == "queryPassportsByPassNb" { //find marbles for owner X using rich query
-		return s.queryPassportsByPassNb(APIstub, args)
-	} else if function == "validNumPwd" { //find marbles for owner X using rich query
-		return s.validNumPwd(APIstub, args)
-	} else if function == "changePassportOwner" {
-		return s.changePassportOwner(APIstub, args)
-	}
-
-	return shim.Error("Invalid Smart Contract function name.")
-}
-
-func (s *SmartContract) queryPassport(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-
-	if len(args) != 1 {
-		return shim.Error("Incorrect number of arguments. Expecting 1")
-	}
-
-	passportAsBytes, _ := APIstub.GetState(args[0])
-	return shim.Success(passportAsBytes)
-}
-
-func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
-
-	taille := 1.65
-	passports := []Passport{
-		Passport{Type: "P", CountryCode: "FR", PassNb: "14ML52147", Name: "Jean", Surname: "Dupont", DateOfBirth: "16/09/1985", Nationality: "France", Sex: "M", PlaceOfBirth: "Toulouse", Height: taille, Autority: "Préfecture de ", Residence: "Avenue des Facultés, 33400 Talence", EyesColor: "Marron", DateOfExpiry: "16/02/2023", DateOfIssue: "25/11/2013", PassOrigin: "France", Validity: "Valide", Password: "Password1", Image: "testimage"},
-		Passport{Type: "P", CountryCode: "FR", PassNb: "14ML22389", Name: "Brad", Surname: "Dupont", DateOfBirth: "10/03/1975", Nationality: "France", Sex: "M", PlaceOfBirth: "Toulouse", Height: taille, Autority: "Préfecture de ", Residence: "Avenue des Facultés, 33400 Talence", EyesColor: "Marron", DateOfExpiry: "16/02/2023", DateOfIssue: "5/07/2017", PassOrigin: "France", Validity: "Valide", Password: "Password2", Image: "testimage"},
-		Passport{Type: "P", CountryCode: "FR", PassNb: "14ML66146", Name: "Jin Soo", Surname: "Dupont", DateOfBirth: "1/05/2000", Nationality: "France", Sex: "M", PlaceOfBirth: "Toulouse", Height: taille, Autority: "Préfecture de ", Residence: "Avenue des Facultés, 33400 Talence", EyesColor: "Marron", DateOfExpiry: "16/02/2023", DateOfIssue: "2/01/2015", PassOrigin: "France", Validity: "Valide", Password: "Password3", Image: "testimage"},
-	}
-
-	i := 0
-	for i < len(passports) {
-		fmt.Println("i is ", i)
-		passportAsBytes, _ := json.Marshal(passports[i])
-		APIstub.PutState(strconv.Itoa(i), passportAsBytes)
-		fmt.Println("Added", passports[i])
-		i = i + 1
-	}
-
-	return shim.Success(nil)
-}
-
-func (s *SmartContract) createPassport(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-
-	if len(args) != 19 {
-		return shim.Error("Incorrect number of arguments. Expecting 18")
-	}
-
-	startKey := "0"
-	endKey := "999"
-
-	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-	defer resultsIterator.Close()
-	var buffer bytes.Buffer
-	var i int
-
-	i = 0
-	for resultsIterator.HasNext() {
-		queryResponse, err := resultsIterator.Next()
-		if err != nil {
-			return shim.Error(err.Error())
-		}
-
-		buffer.WriteString(queryResponse.Key)
-
-		i = i + 1
-	}
-
-	taille, _ := strconv.ParseFloat(args[9], 64)
-
-	queryString := fmt.Sprintf("{\"selector\":{\"passNb\":\"%s\"}}", args[2])
-
-	queryResults, err := getQueryResultForQueryString(APIstub, queryString)
-
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-
-	if queryResults == nil {
-		var passport = Passport{Type: args[0], CountryCode: args[1], PassNb: args[2], Name: args[3], Surname: args[4], DateOfBirth: args[5], Nationality: args[6], Sex: args[7], PlaceOfBirth: args[8], Height: taille, Autority: args[10], Residence: args[11], EyesColor: args[12], DateOfExpiry: args[13], DateOfIssue: args[14], PassOrigin: args[15], Validity: args[16], Password: args[17], Image: args[18]}
-		passportAsBytes, _ := json.Marshal(passport)
-		APIstub.PutState(strconv.Itoa(i), passportAsBytes)
-		return shim.Success(nil)
-	} else {
-		return shim.Error(err.Error())
-	}
-
-}
-
-func (s *SmartContract) queryAllPassports(APIstub shim.ChaincodeStubInterface) sc.Response {
-
-	startKey := "0"
-	endKey := "999"
-
-	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-	defer resultsIterator.Close()
-
-	// buffer is a JSON array containing QueryResults
-	var buffer bytes.Buffer
-	buffer.WriteString("[")
-
-	bArrayMemberAlreadyWritten := false
-	for resultsIterator.HasNext() {
-		queryResponse, err := resultsIterator.Next()
-		if err != nil {
-			return shim.Error(err.Error())
-		}
-		// Add a comma before array members, suppress it for the first array member
-		if bArrayMemberAlreadyWritten == true {
-			buffer.WriteString(",")
-		}
-		buffer.WriteString("{\"id\":")
-		buffer.WriteString("\"")
-		buffer.WriteString(queryResponse.Key)
-		buffer.WriteString("\"")
-
-		buffer.WriteString(", \"infos\":")
-		// Record is a JSON object, so we write as-is
-		buffer.WriteString(string(queryResponse.Value))
-		buffer.WriteString("}")
-		bArrayMemberAlreadyWritten = true
-	}
-	buffer.WriteString("]")
-
-	fmt.Printf("- queryAllPassports:\n%s\n", buffer.String())
-
-	return shim.Success(buffer.Bytes())
-}
-
-func (s *SmartContract) queryPassportsByPassNb(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-
-	if len(args) < 1 {
-		return shim.Error("Incorrect number of arguments. Expecting 1")
-	}
-
-	PassNb := args[0]
-
-	queryString := fmt.Sprintf("{\"selector\":{\"passNb\":\"%s\"}}", PassNb)
-
-	queryResults, err := getQueryResultForQueryString(APIstub, queryString)
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-	return shim.Success(queryResults)
-}
-
-func (s *SmartContract) validNumPwd(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-
-	if len(args) != 2 {
-		return shim.Error("Incorrect number of arguments. Expecting 2")
-	}
-	var buffer bytes.Buffer
-
-	PassNb := args[0]
-	Pwd := args[1]
-	queryString := fmt.Sprintf("{\"selector\":{\"passNb\":\"%s\",\"password\":\"%s\"}}", PassNb, Pwd)
-
-	queryResults, err := getQueryResultForQueryString(APIstub, queryString)
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-	if queryResults != nil {
-		buffer.WriteString("true")
-		return shim.Success(buffer.Bytes())
-	}
-	buffer.WriteString("false")
-	return shim.Success(buffer.Bytes())
-}
-
-func (s *SmartContract) changePassportOwner(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-
-	if len(args) != 2 {
-		return shim.Error("Incorrect number of arguments. Expecting 2")
-	}
-
-	passportAsBytes, _ := APIstub.GetState(args[0])
-	passport := Passport{}
-
-	json.Unmarshal(passportAsBytes, &passport)
-	passport.Name = args[1]
-
-	passportAsBytes, _ = json.Marshal(passport)
-	APIstub.PutState(args[0], passportAsBytes)
-
-	return shim.Success(nil)
-}
-
-func getQueryResultForQueryString(APIstub shim.ChaincodeStubInterface, queryString string) ([]byte, error) {
-
-	resultsIterator, err := APIstub.GetQueryResult(queryString)
-	if err != nil {
-		return nil, err
-	}
-	defer resultsIterator.Close()
-
-	buffer, err := constructQueryResponseFromIterator(resultsIterator)
-	if err != nil {
-		return nil, err
-	}
-
-	return buffer.Bytes(), nil
-}
-
-func constructQueryResponseFromIterator(resultsIterator shim.StateQueryIteratorInterface) (*bytes.Buffer, error) {
-	// buffer is a JSON array containing QueryResults
-	var buffer bytes.Buffer
-
-	bArrayMemberAlreadyWritten := false
-	for resultsIterator.HasNext() {
-		queryResponse, err := resultsIterator.Next()
-		if err != nil {
-			return nil, err
-		}
-		// Add a comma before array members, suppress it for the first array member
-		if bArrayMemberAlreadyWritten == true {
-			buffer.WriteString(",")
-		}
-		buffer.WriteString("{\"id\":")
-		buffer.WriteString("\"")
-		buffer.WriteString(queryResponse.Key)
-		buffer.WriteString("\"")
-
-		buffer.WriteString(", \"infos\":")
-		// Record is a JSON object, so we write as-is
-		buffer.WriteString(string(queryResponse.Value))
-		buffer.WriteString("}")
-		bArrayMemberAlreadyWritten = true
-	}
-
-	return &buffer, nil
-}
-
-// The main function is only relevant in unit test mode. Only included here for completeness.
-func main() {
-
-	// Create a new Smart Contract
-	err := shim.Start(new(SmartContract))
-	if err != nil {
-		fmt.Printf("Error creating new Smart Contract: %s", err)
-	}
-}
+ /* Imports
+  * 4 utility libraries for formatting, handling bytes, reading and writing JSON, and string manipulation
+  * 2 specific Hyperledger Fabric specific libraries for Smart Contracts
+  */
+ import (
+	 "bytes"
+	 "encoding/json"
+	 "fmt"
+	 "strconv"
+ 
+	 "github.com/hyperledger/fabric/core/chaincode/shim"
+	 sc "github.com/hyperledger/fabric/protos/peer"
+ )
+ 
+ // Define the Smart Contract structure
+ type SmartContract struct {
+ }
+ 
+ // Define the passport structure, with 4 properties.  Structure tags are used by encoding/json library
+ type Passport struct {
+	 Type         string  `json:"type"`
+	 CountryCode  string  `json:"countryCode"`
+	 PassNb       string  `json:"passNb"`
+	 Name         string  `json:"name"`
+	 Surname      string  `json:"surname"`
+	 DateOfBirth  string  `json:"dateOfBirth"`
+	 Nationality  string  `json:"nationality"`
+	 Sex          string  `json:"sex"`
+	 PlaceOfBirth string  `json:"placeOfBirth"`
+	 Height       float64 `json:"height"`
+	 Autority     string  `json:"autority"`
+	 Residence    string  `json:"residence"`
+	 EyesColor    string  `json:"eyesColor"`
+	 DateOfExpiry string  `json:"dateOfExpiry"`
+	 DateOfIssue  string  `json:"dateOfIssue"`
+	 PassOrigin   string  `json:"passOrigin"`
+	 Validity     string  `json:"validity"`
+	 Password     string  `json:"password"`
+	 Image        string  `json:"image"`
+ }
+ 
+ /*
+  * The Init method is called when the Smart Contract "fabcar" is instantiated by the blockchain network
+  * Best practice is to have any Ledger initialization in separate function -- see initLedger()
+  */
+ func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
+	 return shim.Success(nil)
+ }
+ 
+ /*
+  * The Invoke method is called as a result of an application request to run the Smart Contract "fabcar"
+  * The calling application program has also specified the particular smart contract function to be called, with arguments
+  */
+ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response {
+ 
+	 // Retrieve the requested Smart Contract function and arguments
+	 function, args := APIstub.GetFunctionAndParameters()
+	 // Route to the appropriate handler function to interact with the ledger appropriately
+	 if function == "queryPassport" {
+		 return s.queryPassport(APIstub, args)
+	 } else if function == "initLedger" {
+		 return s.initLedger(APIstub)
+	 } else if function == "createPassport" {
+		 return s.createPassport(APIstub, args)
+	 } else if function == "queryAllPassports" {
+		 return s.queryAllPassports(APIstub)
+	 } else if function == "queryPassportsByPassNb" { //find marbles for owner X using rich query
+		 return s.queryPassportsByPassNb(APIstub, args)
+	 } else if function == "validNumPwd" { //find marbles for owner X using rich query
+		 return s.validNumPwd(APIstub, args)
+	 } else if function == "changePassportOwner" {
+		 return s.changePassportOwner(APIstub, args)
+	 } else if function == "searchPassport" {
+		 return s.searchPassport(APIstub, args)
+	 }
+ 
+	 return shim.Error("Invalid Smart Contract function name.")
+ }
+ 
+ func (s *SmartContract) queryPassport(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+ 
+	 if len(args) != 1 {
+		 return shim.Error("Incorrect number of arguments. Expecting 1")
+	 }
+ 
+	 passportAsBytes, _ := APIstub.GetState(args[0])
+	 return shim.Success(passportAsBytes)
+ }
+ 
+ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
+ 
+	 taille := 1.65
+	 passports := []Passport{
+		 Passport{Type: "P", CountryCode: "FR", PassNb: "14ML52147", Name: "Jean", Surname: "Dupont", DateOfBirth: "16/09/1985", Nationality: "France", Sex: "M", PlaceOfBirth: "Toulouse", Height: taille, Autority: "Préfecture de ", Residence: "Avenue des Facultés, 33400 Talence", EyesColor: "Marron", DateOfExpiry: "16/02/2023", DateOfIssue: "25/11/2013", PassOrigin: "France", Validity: "Valide", Password: "Password1", Image: "testimage"},
+		 Passport{Type: "P", CountryCode: "FR", PassNb: "14ML22389", Name: "Brad", Surname: "Dupont", DateOfBirth: "10/03/1975", Nationality: "France", Sex: "M", PlaceOfBirth: "Toulouse", Height: taille, Autority: "Préfecture de ", Residence: "Avenue des Facultés, 33400 Talence", EyesColor: "Marron", DateOfExpiry: "16/02/2023", DateOfIssue: "5/07/2017", PassOrigin: "France", Validity: "Valide", Password: "Password2", Image: "testimage"},
+		 Passport{Type: "P", CountryCode: "FR", PassNb: "14ML66146", Name: "Jin Soo", Surname: "Dupont", DateOfBirth: "1/05/2000", Nationality: "France", Sex: "M", PlaceOfBirth: "Toulouse", Height: taille, Autority: "Préfecture de ", Residence: "Avenue des Facultés, 33400 Talence", EyesColor: "Marron", DateOfExpiry: "16/02/2023", DateOfIssue: "2/01/2015", PassOrigin: "France", Validity: "Valide", Password: "Password3", Image: "testimage"},
+	 }
+ 
+	 i := 0
+	 for i < len(passports) {
+		 fmt.Println("i is ", i)
+		 passportAsBytes, _ := json.Marshal(passports[i])
+		 APIstub.PutState(strconv.Itoa(i), passportAsBytes)
+		 fmt.Println("Added", passports[i])
+		 i = i + 1
+	 }
+ 
+	 return shim.Success(nil)
+ }
+ 
+ func (s *SmartContract) createPassport(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+ 
+	 if len(args) != 19 {
+		 return shim.Error("Incorrect number of arguments. Expecting 18")
+	 }
+ 
+	 startKey := "0"
+	 endKey := "999"
+ 
+	 resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
+	 if err != nil {
+		 return shim.Error(err.Error())
+	 }
+	 defer resultsIterator.Close()
+	 var buffer bytes.Buffer
+	 var i int
+ 
+	 i = 0
+	 for resultsIterator.HasNext() {
+		 queryResponse, err := resultsIterator.Next()
+		 if err != nil {
+			 return shim.Error(err.Error())
+		 }
+ 
+		 buffer.WriteString(queryResponse.Key)
+ 
+		 i = i + 1
+	 }
+ 
+	 taille, _ := strconv.ParseFloat(args[9], 64)
+ 
+	 queryString := fmt.Sprintf("{\"selector\":{\"passNb\":\"%s\"}}", args[2])
+ 
+	 queryResults, err := getQueryResultForQueryString(APIstub, queryString)
+ 
+	 if err != nil {
+		 return shim.Error(err.Error())
+	 }
+ 
+	 if queryResults == nil {
+		 var passport = Passport{Type: args[0], CountryCode: args[1], PassNb: args[2], Name: args[3], Surname: args[4], DateOfBirth: args[5], Nationality: args[6], Sex: args[7], PlaceOfBirth: args[8], Height: taille, Autority: args[10], Residence: args[11], EyesColor: args[12], DateOfExpiry: args[13], DateOfIssue: args[14], PassOrigin: args[15], Validity: args[16], Password: args[17], Image: args[18]}
+		 passportAsBytes, _ := json.Marshal(passport)
+		 APIstub.PutState(strconv.Itoa(i), passportAsBytes)
+		 return shim.Success(nil)
+	 } else {
+		 return shim.Error(err.Error())
+	 }
+ 
+ }
+ 
+ func (s *SmartContract) queryAllPassports(APIstub shim.ChaincodeStubInterface) sc.Response {
+ 
+	 startKey := "0"
+	 endKey := "999"
+ 
+	 resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
+	 if err != nil {
+		 return shim.Error(err.Error())
+	 }
+	 defer resultsIterator.Close()
+ 
+	 // buffer is a JSON array containing QueryResults
+	 var buffer bytes.Buffer
+	 buffer.WriteString("[")
+ 
+	 bArrayMemberAlreadyWritten := false
+	 for resultsIterator.HasNext() {
+		 queryResponse, err := resultsIterator.Next()
+		 if err != nil {
+			 return shim.Error(err.Error())
+		 }
+		 // Add a comma before array members, suppress it for the first array member
+		 if bArrayMemberAlreadyWritten == true {
+			 buffer.WriteString(",")
+		 }
+		 buffer.WriteString("{\"id\":")
+		 buffer.WriteString("\"")
+		 buffer.WriteString(queryResponse.Key)
+		 buffer.WriteString("\"")
+ 
+		 buffer.WriteString(", \"infos\":")
+		 // Record is a JSON object, so we write as-is
+		 buffer.WriteString(string(queryResponse.Value))
+		 buffer.WriteString("}")
+		 bArrayMemberAlreadyWritten = true
+	 }
+	 buffer.WriteString("]")
+ 
+	 fmt.Printf("- queryAllPassports:\n%s\n", buffer.String())
+ 
+	 return shim.Success(buffer.Bytes())
+ }
+ 
+ func (s *SmartContract) queryPassportsByPassNb(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+ 
+	 if len(args) < 1 {
+		 return shim.Error("Incorrect number of arguments. Expecting 1")
+	 }
+ 
+	 PassNb := args[0]
+ 
+	 queryString := fmt.Sprintf("{\"selector\":{\"passNb\":\"%s\"}}", PassNb)
+ 
+	 queryResults, err := getQueryResultForQueryString(APIstub, queryString)
+	 if err != nil {
+		 return shim.Error(err.Error())
+	 }
+	 return shim.Success(queryResults)
+ }
+ func (s *SmartContract) searchPassport(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+ 
+	 if len(args) != 1 {
+		 return shim.Error("Incorrect number of arguments. Expecting 1")
+	 }
+	 CountryCode := args[0]
+ 
+	 queryString := fmt.Sprintf("{\"selector\":{\"countryCode\":\"%s\"}}",CountryCode)
+ 
+	 queryResults, err := getQueryResultForQueryString(APIstub, queryString)
+	 if err != nil {
+		 return shim.Error(err.Error())
+	 }
+	 return shim.Success(queryResults)
+ }
+ 
+ func (s *SmartContract) validNumPwd(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+ 
+	 if len(args) != 2 {
+		 return shim.Error("Incorrect number of arguments. Expecting 2")
+	 }
+	 var buffer bytes.Buffer
+ 
+	 PassNb := args[0]
+	 Pwd := args[1]
+	 queryString := fmt.Sprintf("{\"selector\":{\"passNb\":\"%s\",\"password\":\"%s\"}}", PassNb, Pwd)
+ 
+	 queryResults, err := getQueryResultForQueryString(APIstub, queryString)
+	 if err != nil {
+		 return shim.Error(err.Error())
+	 }
+	 if queryResults != nil {
+		 buffer.WriteString("true")
+		 return shim.Success(buffer.Bytes())
+	 }
+	 buffer.WriteString("false")
+	 return shim.Success(buffer.Bytes())
+ }
+ 
+ func (s *SmartContract) changePassportOwner(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+ 
+	 if len(args) != 2 {
+		 return shim.Error("Incorrect number of arguments. Expecting 2")
+	 }
+ 
+	 passportAsBytes, _ := APIstub.GetState(args[0])
+	 passport := Passport{}
+ 
+	 json.Unmarshal(passportAsBytes, &passport)
+	 passport.Name = args[1]
+ 
+	 passportAsBytes, _ = json.Marshal(passport)
+	 APIstub.PutState(args[0], passportAsBytes)
+ 
+	 return shim.Success(nil)
+ }
+ 
+ func getQueryResultForQueryString(APIstub shim.ChaincodeStubInterface, queryString string) ([]byte, error) {
+ 
+	 resultsIterator, err := APIstub.GetQueryResult(queryString)
+	 if err != nil {
+		 return nil, err
+	 }
+	 defer resultsIterator.Close()
+ 
+	 buffer, err := constructQueryResponseFromIterator(resultsIterator)
+	 if err != nil {
+		 return nil, err
+	 }
+ 
+	 return buffer.Bytes(), nil
+ }
+ 
+ func constructQueryResponseFromIterator(resultsIterator shim.StateQueryIteratorInterface) (*bytes.Buffer, error) {
+	 // buffer is a JSON array containing QueryResults
+	 var buffer bytes.Buffer
+ 
+	 bArrayMemberAlreadyWritten := false
+	 for resultsIterator.HasNext() {
+		 queryResponse, err := resultsIterator.Next()
+		 if err != nil {
+			 return nil, err
+		 }
+		 // Add a comma before array members, suppress it for the first array member
+		 if bArrayMemberAlreadyWritten == true {
+			 buffer.WriteString(",")
+		 }
+		 buffer.WriteString("{\"id\":")
+		 buffer.WriteString("\"")
+		 buffer.WriteString(queryResponse.Key)
+		 buffer.WriteString("\"")
+ 
+		 buffer.WriteString(", \"infos\":")
+		 // Record is a JSON object, so we write as-is
+		 buffer.WriteString(string(queryResponse.Value))
+		 buffer.WriteString("}")
+		 bArrayMemberAlreadyWritten = true
+	 }
+ 
+	 return &buffer, nil
+ }
+ 
+ // The main function is only relevant in unit test mode. Only included here for completeness.
+ func main() {
+ 
+	 // Create a new Smart Contract
+	 err := shim.Start(new(SmartContract))
+	 if err != nil {
+		 fmt.Printf("Error creating new Smart Contract: %s", err)
+	 }
+ }
