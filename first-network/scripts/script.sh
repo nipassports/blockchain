@@ -106,17 +106,19 @@ installChaincode 1 3
 echo "Instantiating chaincode on peer0.org2..."
 instantiateChaincode 0 2
 
-# Instantiate chaincode on peer0.org1
+# # Instantiate chaincode on peer0.org1
 echo "Instantiating chaincode on peer0.org1..."
 instantiateChaincode 0 1
 
-# # Instantiate chaincode on peer0.org3
-# echo "Instantiating chaincode on peer0.org3..."
-# instantiateChaincode 0 3
-
 # Invoke chaincode on peer0.org1 and peer0.org2 and peer0.org3
-echo "Sending invoke transaction on peer0.org1 peer0.org2..."
+echo "Sending invoke transaction on peer0.org1 peer0.org2 and peer0.org3"
 chaincodeInvoke 0 1 0 2 0 3
+
+echo "QUERY PEER0.ORG2"
+chaincodeQuery 0 3
+
+echo "QUERY PEER0.ORG2"
+chaincodeQuery 0 1
 
 echo "QUERY PEER0.ORG2"
 chaincodeQuery 0 2

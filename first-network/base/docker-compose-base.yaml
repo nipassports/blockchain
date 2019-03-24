@@ -132,8 +132,8 @@ services:
         - ../crypto-config/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/tls:/etc/hyperledger/fabric/tls
         - peer0.org3.example.com:/var/hyperledger/production
     ports:
-      - 1151:7051
-      - 1153:7053
+      - 11051:7051
+      - 11053:7053
 
   peer1.org3.example.com:
     container_name: peer1.org3.example.com

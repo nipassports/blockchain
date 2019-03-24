@@ -188,6 +188,9 @@ function networkUp() {
     echo "ERROR !!!! Test failed"
     exit 1
   fi
+
+  
+
 }
 
 # Upgrade the network components which are at version 1.3.x to 1.4.x
