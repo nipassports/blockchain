@@ -43,11 +43,6 @@ async function main() {
         const result1 = await contract.evaluateTransaction('queryAllPassports');
         console.log(`Transaction has been evaluated - querry all passeports, result is: ${result1.toString()}\n`);
 
-        await contract.submitTransaction('createPassport', 'P', 'EN', "45ML44147", 'brad', 'davincy','10/04/1985', 'France', 'M', 'Toulouse','1.65','Préfecture de ', 'Avenue des Facultés, 33400 Talence', 'Marron', '16/02/2023','25/01/2015','France', 'Valide','Password3', 'Image');
-
-        const result2 = await contract.evaluateTransaction('searchPassport', 'EN');
-        console.log(`Transaction has been evaluated - search passport, result is: ${result2.toString()}\n`);
-
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
         process.exit(1);
