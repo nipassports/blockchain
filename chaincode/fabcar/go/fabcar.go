@@ -96,8 +96,8 @@
 		 return s.validNumPwd(APIstub, args)
 	 } else if function == "changePassportOwner" {
 		 return s.changePassportOwner(APIstub, args)
-	 } else if function == "searchPassport" {
-		 return s.searchPassport(APIstub, args)
+	 } else if function == "searchPassportByCountry" {
+		 return s.searchPassportByCountry(APIstub, args)
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
@@ -243,7 +243,7 @@
 	 }
 	 return shim.Success(queryResults)
  }
- func (s *SmartContract) searchPassport(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+ func (s *SmartContract) searchPassportByCountry(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
  
 	 if len(args) != 1 {
 		 return shim.Error("Incorrect number of arguments. Expecting 1")
@@ -256,7 +256,13 @@
 	 if err != nil {
 		 return shim.Error(err.Error())
 	 }
-	 return shim.Success(queryResults)
+
+	 var buffer bytes.Buffer
+	 buffer.WriteString("[")
+	 buffer.Write(queryResults)
+	 buffer.WriteString("]")
+
+	 return shim.Success(buffer.Bytes())
  }
  
  func (s *SmartContract) validNumPwd(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
