@@ -40,8 +40,8 @@ async function main() {
 
         // Evaluate the specified transaction.
         
-        //const result1 = await contract.evaluateTransaction('queryAllPassports');
-        const result1 = await contract.evaluateTransaction('searchPassport', 'FR');
+        const result1 = await contract.evaluateTransaction('queryAllPassports');
+        // const result1 = await contract.evaluateTransaction('searchPassportByCountry', 'FR');
 
         console.log(`Transaction has been evaluated - querry all passeports, result is: ${result1.toString()}\n`);
 

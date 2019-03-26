@@ -39,7 +39,8 @@ async function main() {
         const contract = network.getContract('mycc');
 
         // Submit the specified transaction.
-        await contract.submitTransaction('createPassport', 'P', 'FR', "45ML94049", 'brad', 'davincy','10/04/1985', 'France', 'M', 'Toulouse','1.65','Préfecture de ', 'Avenue des Facultés, 33400 Talence', 'Marron', '16/02/2023','25/01/2015','France', 'Valide','Password3', 'Image');
+        //await contract.submitTransaction('createPassport', 'P', 'FR', "45ML94049", 'brad', 'davincy','10/04/1985', 'France', 'M', 'Toulouse','1.65','Préfecture de ', 'Avenue des Facultés, 33400 Talence', 'Marron', '16/02/2023','25/01/2015','France', 'Valide','Password3', 'Image');
+        await contract.submitTransaction('changePassportValidity', '2');
         console.log('Transaction has been submitted');
 
         // Disconnect from the gateway.
