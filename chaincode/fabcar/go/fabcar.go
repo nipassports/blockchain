@@ -284,7 +284,12 @@ func (s *SmartContract) changePassportValidity(APIstub shim.ChaincodeStubInterfa
 	passport := Passport{}
 
 	json.Unmarshal(passportAsBytes, &passport)
-	passport.Validity = "Invalide"
+	if passport.Validity == "Invalide" {
+		passport.Validity = "Valide"
+	} else if passport.Validity == "Valide" {
+		passport.Validity = "Invalide"
+	}
+	
 
 	passportAsBytes, _ = json.Marshal(passport)
 	APIstub.PutState(args[0], passportAsBytes)
