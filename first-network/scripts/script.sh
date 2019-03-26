@@ -114,14 +114,11 @@ instantiateChaincode 0 1
 echo "Sending invoke transaction on peer0.org1 peer0.org2 and peer0.org3"
 chaincodeInvoke 0 1 0 2 0 3
 
-echo "QUERY PEER0.ORG2"
-chaincodeQuery 0 3
+# chaincodeQuery 0 3
 
-echo "QUERY PEER0.ORG2"
-chaincodeQuery 0 1
+# chaincodeQuery 0 1
 
-echo "QUERY PEER0.ORG2"
-chaincodeQuery 0 2
+# chaincodeQuery 0 2
 
 
 echo
