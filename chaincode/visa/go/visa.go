@@ -29,6 +29,7 @@ package main
  * 2 specific Hyperledger Fabric specific libraries for Smart Contracts
  */
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"strconv"
@@ -79,6 +80,10 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.queryVisa(APIstub, args)
 	} else if function == "initLedger" {
 		return s.initLedger(APIstub)
+	} else if function == "createVisa" {
+		return s.createVisa(APIstub, args)
+	} else if function == "queryAllVisas" {
+		return s.queryAllVisas(APIstub)
 	}
 	return shim.Error("Invalid Smart Contract function name.")
 }
@@ -109,8 +114,127 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 		fmt.Println("Added", visas[i])
 		i = i + 1
 	}
-
 	return shim.Success(nil)
+}
+
+func (s *SmartContract) createVisa(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 14 {
+		return shim.Error("Incorrect number of arguments. Expecting 14")
+	}
+
+	startKey := "0"
+	endKey := "999"
+
+	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	defer resultsIterator.Close()
+	var buffer bytes.Buffer
+	var i int
+
+	i = 0
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+
+		buffer.WriteString(queryResponse.Key)
+
+		i = i + 1
+	}
+
+	queryString := fmt.Sprintf("{\"selector\":{\"visaCode\":\"%s\"}}", args[1])
+
+	queryResults, err := getQueryResultForQueryString(APIstub, queryString)
+
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	if queryResults == nil {
+		var visa = Visa{Type: args[0], VisaCode: args[1], PassNb: args[2], Name: args[3], Surname: args[4], Autority: args[5], DateOfExpiry: args[6], DateOfIssue: args[7], PlaceOfIssue: args[8], Validity: args[9], ValidFor: args[10], NumberOfEntries: args[11], DurationOfStay: args[12], Remarks: args[13]}
+		visaAsBytes, _ := json.Marshal(visa)
+		APIstub.PutState(strconv.Itoa(i), visaAsBytes)
+		return shim.Success(nil)
+	} else {
+		return shim.Error(err.Error())
+	}
+}
+
+func (s *SmartContract) queryAllVisas(APIstub shim.ChaincodeStubInterface) sc.Response {
+
+	startKey := "0"
+	endKey := "999"
+
+	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	defer resultsIterator.Close()
+
+	// buffer is a JSON array containing QueryResults
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+
+	query, err := constructQueryResponseFromIterator(resultsIterator)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	buffer.Write(query.Bytes())
+	buffer.WriteString("]")
+
+	fmt.Printf("- queryAllVisas:\n%s\n", buffer.String())
+
+	return shim.Success(buffer.Bytes())
+}
+
+func getQueryResultForQueryString(APIstub shim.ChaincodeStubInterface, queryString string) ([]byte, error) {
+
+	resultsIterator, err := APIstub.GetQueryResult(queryString)
+	if err != nil {
+		return nil, err
+	}
+	defer resultsIterator.Close()
+
+	buffer, err := constructQueryResponseFromIterator(resultsIterator)
+	if err != nil {
+		return nil, err
+	}
+
+	return buffer.Bytes(), nil
+}
+
+func constructQueryResponseFromIterator(resultsIterator shim.StateQueryIteratorInterface) (*bytes.Buffer, error) {
+	// buffer is a JSON array containing QueryResults
+	var buffer bytes.Buffer
+
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return nil, err
+		}
+		// Add a comma before array members, suppress it for the first array member
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		buffer.WriteString("{\"id\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"infos\":")
+		// Record is a JSON object, so we write as-is
+		buffer.WriteString(string(queryResponse.Value))
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+
+	return &buffer, nil
 }
 
 // The main function is only relevant in unit test mode. Only included here for completeness.

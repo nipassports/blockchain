@@ -120,7 +120,7 @@ installChaincode() {
   VERSION=${3:-1.0}
   set -x
   peer chaincode install -n mycc -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH} >&log.txt
-  peer chaincode install -n VISA -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH2} >&log.txt
+  peer chaincode install -n visa -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH2} >&log.txt
   res=$?
   set +x
   cat log.txt
@@ -146,7 +146,7 @@ instantiateChaincode() {
   else
     set -x
     peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -l ${LANGUAGE} -v ${VERSION} -c '{"Args":[]}' -P "OR ('Org1MSP.peer','Org2MSP.peer', 'Org3MSP.peer')" >&log.txt
-    peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n VISA -l ${LANGUAGE} -v ${VERSION} -c '{"Args":[]}' -P "OR ('Org1MSP.peer','Org2MSP.peer', 'Org3MSP.peer')" >&log.txt
+    peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n visa -l ${LANGUAGE} -v ${VERSION} -c '{"Args":[]}' -P "OR ('Org1MSP.peer','Org2MSP.peer', 'Org3MSP.peer')" >&log.txt
     res=$?
     set +x
   fi
@@ -304,7 +304,7 @@ chaincodeInvoke() {
   else
     set -x
     peer chaincode invoke -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc $PEER_CONN_PARMS -c chaincode invoke -o orderer.example.com:7050 -C mychannel -n mycc -c '{"Args":["initLedger"]}' >&log.txt
-    peer chaincode invoke -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc $PEER_CONN_PARMS -c chaincode invoke -o orderer.example.com:7050 -C mychannel -n VISA -c '{"Args":["initLedger"]}' >&log.txt
+    peer chaincode invoke -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc $PEER_CONN_PARMS -c chaincode invoke -o orderer.example.com:7050 -C mychannel -n visa -c '{"Args":["initLedger"]}' >&log.txt
     res=$?
     set +x
   fi
