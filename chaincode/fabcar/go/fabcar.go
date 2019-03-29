@@ -80,7 +80,6 @@ type Passport struct {
 	Validity     string  `json:"validity"`
 	Password     string  `json:"password"`
 	Image        string  `json:"image"`
-	Visa         []Visa  `json:"visa"`
 }
 
 /*
