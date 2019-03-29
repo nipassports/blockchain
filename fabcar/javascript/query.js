@@ -36,14 +36,14 @@ async function main() {
         const network = await gateway.getNetwork('mychannel');
 
         // Get the contract from the network.
-        const contract = await network.getContract('mycc');
+        const contract = await network.getContract('VISA');
 
         // Evaluate the specified transaction.
         
-        const result1 = await contract.evaluateTransaction('queryAllPassports');
+        const result1 = await contract.evaluateTransaction('queryVisa', '0');
         // const result1 = await contract.evaluateTransaction('searchPassportByCountry', 'FR');
 
-        console.log(`Transaction has been evaluated - querry all passeports, result is: ${result1.toString()}\n`);
+        console.log(`Transaction has been evaluated, result is: ${result1.toString()}\n`);
 
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);

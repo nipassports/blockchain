@@ -42,23 +42,6 @@ import (
 type SmartContract struct {
 }
 
-type Visa struct {
-	Type            string `json:"type"`
-	VisaCode        string `json:"visaCode"`
-	PassNb          string `json:"passNb"`
-	Name            string `json:"name"`
-	Surname         string `json:"surname"`
-	Autority        string `json:"autority"`
-	DateOfExpiry    string `json:"dateOfExpiry"`
-	DateOfIssue     string `json:"dateOfIssue"`
-	PlaceOfIssue    string `json:"placeOfIssue"`
-	Validity        string `json:"validity"`
-	ValidFor        string `json:"validFor"`
-	NumberOfEntries string `json:"numberOfEntries"`
-	DurationOfStay  string `json:"durationOfStay "`
-	Remarks         string `json:"remarks"`
-}
-
 // Define the passport structure, with 4 properties.  Structure tags are used by encoding/json library
 type Passport struct {
 	Type         string  `json:"type"`
