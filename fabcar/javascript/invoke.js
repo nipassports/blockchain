@@ -36,13 +36,13 @@ async function main() {
         const network = await gateway.getNetwork('mychannel');
 
         // Get the contract from the network.
-        const contract = network.getContract('visa');
-        //const contract = network.getContract('mycc');
+        const contract = network.getContract('mycc');
+        // const contract = await network.getContract('visa');
 
         // Submit the specified transaction.
-        //await contract.submitTransaction('createPassport', 'P', 'FR', "45ML94042", 'brad', 'davincy','10/04/1985', 'France', 'M', 'Toulouse','1.65','Préfecture de ', 'Avenue des Facultés, 33400 Talence', 'Marron', '16/02/2023','25/01/2015','France', 'Valide','Password3', 'Image');
+        await contract.submitTransaction('changePassport' ,'P', 'FR', "14ML52147", 'brazsad', 'davszazsincy','12/4/1995', 'France', 'M', 'Toulouse','1.65','Préfecture de ', 'Avenue des Facultés, 33400 Talence', 'Marron', '16/02/2023','25/01/2015','France', 'Valide','Password3', 'Image');
         //await contract.submitTransaction('changePassportValidity', '2');
-        await contract.submitTransaction('createVisa', 'P', '14ML5814497', 'fds', 'Jean', 'Dupont', 'ddf', '16/09/1985', 'France', 'Toulouse','dfs', 'Préfecture de ', 'Avenue des Facultés, 33400 Talence', 'Marron', '16/02/2023');
+        //await contract.submitTransaction('createVisa', 'P', '14ML521497', 'fds', 'Jean', 'Dupont', 'ddf', '16/09/1985', 'France', 'Toulouse','dfs', 'Préfecture de ', 'Avenue des Facultés, 33400 Talence', 'Marron', '16/02/2023');
         console.log('Transaction has been submitted');
 
         // Disconnect from the gateway.

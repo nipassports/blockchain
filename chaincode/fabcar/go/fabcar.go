@@ -98,6 +98,8 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.changePassportOwner(APIstub, args)
 	} else if function == "changePassport" {
 		return s.changePassport(APIstub, args)
+	} else if function == "querykeybyPassNb" {
+		return s.querykeybyPassNb(APIstub, args)
 	} else if function == "searchPassportByCountry" {
 		return s.searchPassportByCountry(APIstub, args)
 	} else if function == "changePassportValidity" {
@@ -316,40 +318,88 @@ func (s *SmartContract) changePassportOwner(APIstub shim.ChaincodeStubInterface,
 	return shim.Success(nil)
 }
 
-func (s *SmartContract) changePassport(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+func (s *SmartContract) querykeybyPassNb(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	if len(args) != 20 {
-		return shim.Error("Incorrect number of arguments. Expecting 20")
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 19")
 	}
 
-	passportAsBytes, _ := APIstub.GetState(args[0])
+	key, err := getKeybyPAssnum(APIstub, args[0])
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	passportAsBytes, _ := APIstub.GetState(key)
 	passport := Passport{}
 
 	json.Unmarshal(passportAsBytes, &passport)
-	taille, _ := strconv.ParseFloat(args[10], 64)
-	passport.Type = args[1]
-	passport.CountryCode = args[2]
-	passport.PassNb = args[3]
-	passport.Name = args[4]
-	passport.Surname = args[5]
-	passport.DateOfBirth = args[6]
-	passport.Nationality = args[7]
-	passport.Sex = args[8]
-	passport.PlaceOfBirth = args[9]
-	passport.Height = taille
-	passport.Autority = args[11]
-	passport.Residence = args[12]
-	passport.EyesColor = args[13]
-	passport.DateOfExpiry = args[14]
-	passport.DateOfIssue = args[15]
-	passport.PassOrigin = args[16]
-	passport.Validity = args[17]
-	passport.Password = args[18]
-	passport.Image = args[19]
-	passportAsBytes, _ = json.Marshal(passport)
-	APIstub.PutState(args[0], passportAsBytes)
+	var buffer bytes.Buffer
+	buffer.WriteString(key + ":" + passport.PassNb)
+	return shim.Success(buffer.Bytes())
+}
 
+func (s *SmartContract) changePassport(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 19 {
+		return shim.Error("Incorrect number of arguments. Expecting 19")
+	}
+
+	key, err := getKeybyPAssnum(APIstub, args[2])
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	passportAsBytes, _ := APIstub.GetState(key)
+	passport := Passport{}
+
+	json.Unmarshal(passportAsBytes, &passport)
+	taille, _ := strconv.ParseFloat(args[9], 64)
+	passport.Type = args[0]
+	passport.CountryCode = args[1]
+	passport.Name = args[3]
+	passport.Surname = args[4]
+	passport.DateOfBirth = args[5]
+	passport.Nationality = args[6]
+	passport.Sex = args[7]
+	passport.PlaceOfBirth = args[8]
+	passport.Height = taille
+	passport.Autority = args[10]
+	passport.Residence = args[11]
+	passport.EyesColor = args[12]
+	passport.DateOfExpiry = args[13]
+	passport.DateOfIssue = args[14]
+	passport.PassOrigin = args[15]
+	passport.Validity = args[16]
+	passport.Password = args[17]
+	passport.Image = args[18]
+	passportAsBytes, _ = json.Marshal(passport)
+	APIstub.PutState(key, passportAsBytes)
 	return shim.Success(nil)
+}
+
+func getKeybyPAssnum(APIstub shim.ChaincodeStubInterface, PassNb string) (string, error) {
+
+	startKey := "0"
+	endKey := "999"
+
+	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
+	if err != nil {
+		return "", err
+	}
+	passport := Passport{}
+
+	defer resultsIterator.Close()
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return "", err
+		}
+		passport = Passport{}
+		json.Unmarshal(queryResponse.Value, &passport)
+		if passport.PassNb == PassNb {
+			return queryResponse.Key, nil
+		}
+
+	}
+	return "", nil
 }
 
 func getQueryResultForQueryString(APIstub shim.ChaincodeStubInterface, queryString string) ([]byte, error) {
