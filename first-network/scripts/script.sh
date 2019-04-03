@@ -24,7 +24,6 @@ COUNTER=1
 MAX_RETRY=10
 
 CC_SRC_PATH="github.com/chaincode/fabcar/go/"
-CC_SRC_PATH2="github.com/chaincode/visa/go/"
 if [ "$LANGUAGE" = "node" ]; then
 	CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/fabcar/node/"
 fi
@@ -113,7 +112,7 @@ instantiateChaincode 0 1
 
 # Invoke chaincode on peer0.org1 and peer0.org2 and peer0.org3
 echo "Sending invoke transaction on peer0.org1 peer0.org2 and peer0.org3"
-chaincodeInvoke 0 2 0 3 0 1
+chaincodeInvoke 0 1 0 2 0 3
 
 # chaincodeQuery 0 3
 
