@@ -82,6 +82,12 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.initLedger(APIstub)
 	} else if function == "createVisa" {
 		return s.createVisa(APIstub, args)
+	} else if function == "queryVisasByCountry" {
+		return s.queryVisasByCountry(APIstub, args)
+	} else if function == "queryVisasByPassNb" {
+		return s.queryVisasByPassNb(APIstub, args)
+	} else if function == "queryVisasByVisaCode" {
+		return s.queryVisasByVisaCode(APIstub, args)
 	} else if function == "queryAllVisas" {
 		return s.queryAllVisas(APIstub)
 	}
@@ -101,9 +107,9 @@ func (s *SmartContract) queryVisa(APIstub shim.ChaincodeStubInterface, args []st
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 
 	visas := []Visa{
-		Visa{Type: "P", VisaCode: "FR", PassNb: "14ML52147", Name: "Jean", Surname: "Dupont", Autority: "ddf", DateOfExpiry: "16/09/1985", DateOfIssue: "France", PlaceOfIssue: "Toulouse", Validity: "dfs", ValidFor: "Préfecture de ", NumberOfEntries: "Avenue des Facultés, 33400 Talence", DurationOfStay: "Marron", Remarks: "16/02/2023"},
-		Visa{Type: "P", VisaCode: "FR", PassNb: "14ML52147", Name: "Jean", Surname: "Dupont", Autority: "ddf", DateOfExpiry: "16/09/1985", DateOfIssue: "France", PlaceOfIssue: "Toulouse", Validity: "dfs", ValidFor: "Préfecture de ", NumberOfEntries: "Avenue des Facultés, 33400 Talence", DurationOfStay: "Marron", Remarks: "16/02/2023"},
-		Visa{Type: "P", VisaCode: "FR", PassNb: "14ML52147", Name: "Jean", Surname: "Dupont", Autority: "ddf", DateOfExpiry: "16/09/1985", DateOfIssue: "France", PlaceOfIssue: "Toulouse", Validity: "dfs", ValidFor: "Préfecture de ", NumberOfEntries: "Avenue des Facultés, 33400 Talence", DurationOfStay: "Marron", Remarks: "16/02/2023"},
+		Visa{Type: "P", VisaCode: "1230013", PassNb: "14ML52147", Name: "Jean", Surname: "Dupont", Autority: "FRA", DateOfExpiry: "16/09/2025", DateOfIssue: "16/09/2018", PlaceOfIssue: "Toulouse", Validity: "valid", ValidFor: "SCHENGEN ", NumberOfEntries: "MULT", DurationOfStay: "30", Remarks: "CESSEDA R313-3 1"},
+		Visa{Type: "P", VisaCode: "9872837", PassNb: "14ML54147", Name: "Jerome", Surname: "Dupont", Autority: "FRA", DateOfExpiry: "16/09/2022", DateOfIssue: "16/09/2018", PlaceOfIssue: "Toulouse", Validity: "valid", ValidFor: "SCHENGEN ", NumberOfEntries: "MULT", DurationOfStay: "400", Remarks: "CESSEDA R313-3 1"},
+		Visa{Type: "P", VisaCode: "1982982", PassNb: "14ML52557", Name: "Julien", Surname: "Dupont", Autority: "FRA", DateOfExpiry: "16/09/2023", DateOfIssue: "16/09/2018", PlaceOfIssue: "Toulouse", Validity: "valid", ValidFor: "SCHENGEN", NumberOfEntries: "MULT", DurationOfStay: "200", Remarks: "CESSEDA R313-3 1"},
 	}
 
 	i := 0
@@ -190,6 +196,71 @@ func (s *SmartContract) queryAllVisas(APIstub shim.ChaincodeStubInterface) sc.Re
 	fmt.Printf("- queryAllVisas:\n%s\n", buffer.String())
 
 	return shim.Success(buffer.Bytes())
+}
+
+func (s *SmartContract) queryVisasByPassNb(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	PassNb := args[0]
+
+	queryString := fmt.Sprintf("{\"selector\":{\"passNb\":\"%s\"}}", PassNb)
+
+	queryResults, err := getQueryResultForQueryString(APIstub, queryString)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+	buffer.Write(queryResults)
+	buffer.WriteString("]")
+
+	return shim.Success(buffer.Bytes())
+
+}
+
+func (s *SmartContract) queryVisasByCountry(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	Autority := args[0]
+
+	queryString := fmt.Sprintf("{\"selector\":{\"autority\":\"%s\"}}", Autority)
+
+	queryResults, err := getQueryResultForQueryString(APIstub, queryString)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+	buffer.Write(queryResults)
+	buffer.WriteString("]")
+
+	return shim.Success(buffer.Bytes())
+
+}
+func (s *SmartContract) queryVisasByVisaCode(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	VisaCode := args[0]
+
+	queryString := fmt.Sprintf("{\"selector\":{\"visaCode\":\"%s\"}}", VisaCode)
+
+	queryResults, err := getQueryResultForQueryString(APIstub, queryString)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	var buffer bytes.Buffer
+	buffer.Write(queryResults)
+	return shim.Success(buffer.Bytes())
+
 }
 
 func getQueryResultForQueryString(APIstub shim.ChaincodeStubInterface, queryString string) ([]byte, error) {
