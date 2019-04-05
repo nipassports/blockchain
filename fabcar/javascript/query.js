@@ -44,7 +44,7 @@ async function main() {
         const result1 = await contract.evaluateTransaction('querykeybyPassNb','14ML52147');
         // const result1 = await contract.evaluateTransaction('searchPassportByCountry', 'FR');
 
-        console.log(`Transaction has been evaluated - querry all passeports, result is: ${result1.toString()}\n`);
+        console.log(`Transaction has been evaluated, result is: ${result1.toString()}\n`);
 
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
