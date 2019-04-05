@@ -8,7 +8,7 @@ const { FileSystemWallet, Gateway } = require('fabric-network');
 const fs = require('fs');
 const path = require('path');
 
-const ccpPath = path.resolve(__dirname, '..', '..', 'first-network', 'connection1.json');
+const ccpPath = path.resolve(__dirname, '..', '..', 'first-network', 'connection2.json');
 const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
 const ccp = JSON.parse(ccpJSON);
 
@@ -21,27 +21,27 @@ async function main() {
         console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
-        const userExists = await wallet.exists('user1');
+        const userExists = await wallet.exists('user3');
         if (!userExists) {
-            console.log('An identity for the user "user1" does not exist in the wallet');
+            console.log('An identity for the user "user2" does not exist in the wallet');
             console.log('Run the registerUser.js application before retrying');
             return;
         }
 
         // Create a new gateway for connecting to our peer node.
         const gateway = new Gateway();
-        await gateway.connect(ccp, { wallet, identity: 'user1', discovery: { enabled: false } });
+        await gateway.connect(ccp, { wallet, identity: 'user3', discovery: { enabled: false } });
 
         // Get the network (channel) our contract is deployed to.
         const network = await gateway.getNetwork('mychannel');
 
         // Get the contract from the network.
-        //const contract = await network.getContract('mycc');
-        const contract = await network.getContract('visa');
+        const contract = await network.getContract('mycc');
+        // const contract = await network.getContract('visa');
         
         // Evaluate the specified transaction.
-        //const result1 = await contract.evaluateTransaction('queryAllVisas');
-        //const result1 = await contract.evaluateTransaction('querykeybyPassNb','14ML52147');
+        // const result1 = await contract.evaluateTransaction('queryAllVisas');
+        const result1 = await contract.evaluateTransaction('querykeybyPassNb','14ML52147');
         // const result1 = await contract.evaluateTransaction('searchPassportByCountry', 'FR');
 
         console.log(`Transaction has been evaluated, result is: ${result1.toString()}\n`);

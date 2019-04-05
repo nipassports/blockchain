@@ -284,8 +284,7 @@ func (s *SmartContract) changePassportValidity(APIstub shim.ChaincodeStubInterfa
 		return shim.Error("Incorrect number of arguments. Expecting 1")
 	}
 
-	key, err := getKeybyPAssnum(APIstub, args[0])
-	passportAsBytes, _ := APIstub.GetState(key)
+	passportAsBytes, _ := APIstub.GetState(args[0])
 	passport := Passport{}
 
 	json.Unmarshal(passportAsBytes, &passport)
@@ -296,7 +295,7 @@ func (s *SmartContract) changePassportValidity(APIstub shim.ChaincodeStubInterfa
 	}
 
 	passportAsBytes, _ = json.Marshal(passport)
-	APIstub.PutState(key, passportAsBytes)
+	APIstub.PutState(args[0], passportAsBytes)
 
 	return shim.Success(nil)
 }
