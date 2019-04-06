@@ -93,10 +93,11 @@ function askProceed() {
 # TODO Might want to make this optional - could clear other containers
 function clearContainers() {
   CONTAINER_IDS=$(docker ps -a | awk '($2 ~ /dev-peer.*.mycc.*/) {print $1}')
+  CONTAINER_IDS2=$(docker ps -a | awk '($2 ~ /dev-peer.*.visa.*/) {print $1}')
   if [ -z "$CONTAINER_IDS" -o "$CONTAINER_IDS" == " " ]; then
     echo "---- No containers available for deletion ----"
   else
-    docker rm -f $CONTAINER_IDS
+    docker rm -f $CONTAINER_IDS -f $CONTAINER_IDS2
   fi
 }
 
@@ -105,10 +106,11 @@ function clearContainers() {
 # TODO list generated image naming patterns
 function removeUnwantedImages() {
   DOCKER_IMAGE_IDS=$(docker images | awk '($1 ~ /dev-peer.*.mycc.*/) {print $3}')
+  DOCKER_IMAGE_IDS2=$(docker images | awk '($1 ~ /dev-peer.*.visa.*/) {print $3}')
   if [ -z "$DOCKER_IMAGE_IDS" -o "$DOCKER_IMAGE_IDS" == " " ]; then
     echo "---- No images available for deletion ----"
   else
-    docker rmi -f $DOCKER_IMAGE_IDS
+    docker rmi -f $DOCKER_IMAGE_IDS -f $DOCKER_IMAGE_IDS2
   fi
 }
 
