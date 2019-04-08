@@ -55,7 +55,7 @@ type Visa struct {
 	Validity        string `json:"validity"`
 	ValidFor        string `json:"validFor"`
 	NumberOfEntries string `json:"numberOfEntries"`
-	DurationOfStay  string `json:"durationOfStay "`
+	DurationOfStay  string `json:"durationOfStay"`
 	Remarks         string `json:"remarks"`
 }
 
