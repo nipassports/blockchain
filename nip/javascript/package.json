@@ -1,7 +1,7 @@
 {
-    "name": "mycc",
+    "name": "NIPcc",
     "version": "1.0.0",
-    "description": "FabCar application implemented in JavaScript",
+    "description": "Chaincode for NIP project",
     "engines": {
         "node": ">=8",
         "npm": ">=5"

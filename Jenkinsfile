@@ -12,7 +12,8 @@ pipeline {
         stage('Clean Fabric') {
           steps {
             sh 'docker rmi -f $(docker images | grep "hyperledger/fabric" | cut -d" " -f1) | exit 0'
-            sh 'docker rmi -f $(docker images | grep fabcar | cut -d" " -f1) | exit 0'
+            sh 'docker rmi -f $(docker images | grep passport | cut -d" " -f1) | exit 0'
+            sh 'docker rmi -f $(docker images | grep visa | cut -d" " -f1) | exit 0'
             sh 'docker rmi -f $(docker images | grep "hyperledger/fabric" | cut -d" " -f1) | exit 0'
             sh 'docker rmi -f $(docker images | grep "dev-peer" | cut -d" " -f1) | exit 0'
           }
@@ -31,13 +32,13 @@ pipeline {
     }
     stage('Start Fabric') {
       steps {
-        sh 'cd fabcar && ./startFabric.sh'
-        sh 'cd fabcar && ./actionsPostStart.sh'
+        sh 'cd nip && ./startFabric.sh'
+        sh 'cd nip && ./actionsPostStart.sh'
       }
     }
     stage('Restart back') {
       steps {
-        sh '''docker run -d --name nip-back  -v /var/lib/jenkins/workspace/blockchain_master/first-network/:/app/first-network -v /var/lib/jenkins/workspace/blockchain_master/fabcar/javascript/wallet:/app/fabcar/javascript/wallet --net=host nip/back
+        sh '''docker run -d --name nip-back  -v /var/lib/jenkins/workspace/blockchain_master/first-network/:/app/first-network -v /var/lib/jenkins/workspace/blockchain_master/nip/javascript/wallet:/app/nip/javascript/wallet --net=host nip/back
 '''
       }
     }
