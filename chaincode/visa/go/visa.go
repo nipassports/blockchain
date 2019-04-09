@@ -17,11 +17,6 @@
  * under the License.
  */
 
-/*
- * The sample smart contract for documentation topic:
- * Writing Your First Blockchain Application
- */
-
 package main
 
 /* Imports
@@ -60,7 +55,7 @@ type Visa struct {
 }
 
 /*
- * The Init method is called when the Smart Contract "fabcar" is instantiated by the blockchain network
+ * The Init method is called when the Smart Contract is instantiated by the blockchain network
  * Best practice is to have any Ledger initialization in separate function -- see initLedger()
  */
 func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
@@ -68,7 +63,7 @@ func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
 }
 
 /*
- * The Invoke method is called as a result of an application request to run the Smart Contract "fabcar"
+ * The Invoke method is called as a result of an application request to run the Smart Contract
  * The calling application program has also specified the particular smart contract function to be called, with arguments
  */
 func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response {

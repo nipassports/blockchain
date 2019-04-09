@@ -7,7 +7,7 @@ echo "\___ \    | |     / _ \   | |_) |   | |  "
 echo " ___) |   | |    / ___ \  |  _ <    | |  "
 echo "|____/    |_|   /_/   \_\ |_| \_\   |_|  "
 echo
-echo "Build your first network (BYFN) end-to-end test"
+echo "Build NIP Project"
 echo
 CHANNEL_NAME="$1"
 DELAY="$2"
@@ -23,15 +23,8 @@ LANGUAGE=`echo "$LANGUAGE" | tr [:upper:] [:lower:]`
 COUNTER=1
 MAX_RETRY=10
 
-CC_SRC_PATH="github.com/chaincode/fabcar/go/"
+CC_SRC_PATH="github.com/chaincode/passport/go/"
 CC_SRC_PATH2="github.com/chaincode/visa/go/"
-if [ "$LANGUAGE" = "node" ]; then
-	CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/fabcar/node/"
-fi
-
-if [ "$LANGUAGE" = "java" ]; then
-	CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/fabcar/java/"
-fi
 
 echo "Channel name : "$CHANNEL_NAME
 
