@@ -102,9 +102,9 @@ func (s *SmartContract) queryVisa(APIstub shim.ChaincodeStubInterface, args []st
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 
 	visas := []Visa{
-		Visa{Type: "P", VisaCode: "1230013", PassNb: "14ML52147", Name: "Jean", Surname: "Dupont", Autority: "FRA", DateOfExpiry: "16/09/2025", DateOfIssue: "16/09/2018", PlaceOfIssue: "Toulouse", Validity: "valid", ValidFor: "SCHENGEN ", NumberOfEntries: "MULT", DurationOfStay: "30", Remarks: "CESSEDA R313-3 1"},
-		Visa{Type: "P", VisaCode: "9872837", PassNb: "14ML54147", Name: "Jerome", Surname: "Dupont", Autority: "FRA", DateOfExpiry: "16/09/2022", DateOfIssue: "16/09/2018", PlaceOfIssue: "Toulouse", Validity: "valid", ValidFor: "SCHENGEN ", NumberOfEntries: "MULT", DurationOfStay: "400", Remarks: "CESSEDA R313-3 1"},
-		Visa{Type: "P", VisaCode: "1982982", PassNb: "14ML52557", Name: "Julien", Surname: "Dupont", Autority: "FRA", DateOfExpiry: "16/09/2023", DateOfIssue: "16/09/2018", PlaceOfIssue: "Toulouse", Validity: "valid", ValidFor: "SCHENGEN", NumberOfEntries: "MULT", DurationOfStay: "200", Remarks: "CESSEDA R313-3 1"},
+		Visa{Type: "P", VisaCode: "1230013", PassNb: "14ML52147", Name: "Jean", Surname: "Dupont", Autority: "FRA", DateOfExpiry: "16/09/2025", DateOfIssue: "16/09/2018", PlaceOfIssue: "Toulouse", Validity: "Valide", ValidFor: "SCHENGEN ", NumberOfEntries: "MULT", DurationOfStay: "30", Remarks: "CESSEDA R313-3 1"},
+		Visa{Type: "P", VisaCode: "9872837", PassNb: "14ML22389", Name: "Brad", Surname: "Dupont", Autority: "FRA", DateOfExpiry: "16/09/2022", DateOfIssue: "16/09/2018", PlaceOfIssue: "Toulouse", Validity: "Valide", ValidFor: "SCHENGEN ", NumberOfEntries: "MULT", DurationOfStay: "400", Remarks: "CESSEDA R313-3 1"},
+		Visa{Type: "P", VisaCode: "1982982", PassNb: "14ML22389", Name: "Brad", Surname: "Dupont", Autority: "FRA", DateOfExpiry: "16/09/2023", DateOfIssue: "16/09/2018", PlaceOfIssue: "Toulouse", Validity: "Valide", ValidFor: "SCHENGEN", NumberOfEntries: "MULT", DurationOfStay: "200", Remarks: "CESSEDA R313-3 1"},
 	}
 
 	i := 0
