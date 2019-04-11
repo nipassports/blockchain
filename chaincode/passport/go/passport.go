@@ -339,7 +339,7 @@ func (s *SmartContract) querykeybyPassNb(APIstub shim.ChaincodeStubInterface, ar
 
 func (s *SmartContract) changePassport(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	if len(args) != 19 {
+	if len(args) != 18 {
 		return shim.Error("Incorrect number of arguments. Expecting 19")
 	}
 
@@ -368,8 +368,7 @@ func (s *SmartContract) changePassport(APIstub shim.ChaincodeStubInterface, args
 	passport.DateOfIssue = args[14]
 	passport.PassOrigin = args[15]
 	passport.Validity = args[16]
-	passport.Password = args[17]
-	passport.Image = args[18]
+	passport.Image = args[17]
 	passportAsBytes, _ = json.Marshal(passport)
 	APIstub.PutState(key, passportAsBytes)
 	return shim.Success(nil)
