@@ -66,6 +66,13 @@ router.post("/auth", (req, res, next) => {
     });
 });
 
+router.get('/problems/all/:countryCode', (req, res, next) => {
+  const countryCode = req.params.countryCode;
+  problem.find({ countryCode: countryCode})
+    .then(item => (item) ? res.status(201).json(item) : res.status(250).json({ message: "no problems declared " }))
+    .catch(err => console.log("err" + err))
+})
+
 router.get('/visa', checkAuth, (req, res, next) => {
 
 
@@ -113,6 +120,8 @@ router.post('/visa', checkAuth, (req, res, next) => {
     });
   });
 });
+
+
 
 router.get('/visa/all/:countryCode', checkAuth, (req, res, next) => {
   const countryCode = req.params.countryCode;

@@ -2,9 +2,10 @@
 const express = require('express');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const moment = require("moment");
 const router = express.Router();
 const checkAuth = require('../middleware/check-authCustom.js');
-
+const problem = require('../models/problem.js')
 const JWT_KEY = "secret-custom";
 
 const smartContract = require('../smartContract.js');
@@ -72,6 +73,34 @@ router.get('/passport' ,checkAuth,  (req, res, next)=>{
     });
 });
 
+
+
+router.post('/problem_custom', (req, res, next) => {
+  const problem=new problem({
+      _id: new mongoose.Types.ObjectId(), 
+      passNb : res.body.passNb,
+      message : req.body.message,
+      countryCode : req.body.message,
+      type : req.body.type,
+      date : moment().format('DD/MM/YYYY at HH:mm'),
+      author : 1,
+      status : 0
+      });
+      problem
+      .save()
+      .then(result => {
+          console.log(result);
+          res.status(201).json({
+            message: "Problem sent"
+          });
+        })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({
+          error: err
+        });
+      });  
+});
 
 router.get('/visa' ,checkAuth,  (req, res, next)=>{
   promiseVisa.then( (contract) =>{

@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const CustomUser = require('../models/customUser');
-const GouvernmentUser = require('../models/gouvernmentUser');
+const GovernmentUser = require('../models/governmentUser');
 
 router.post("/addCustomUser", (req, res, next) => {
     CustomUser.find({ identifiant: req.body.identifiant })
@@ -74,11 +74,11 @@ router.get("/CustomUser", (req, res, next) => {
       });
   });
 
-  router.post("/addGouvernmentUser", (req, res, next) => {
-    GouvernmentUser.find({ identifiant: req.body.identifiant })
+  router.post("/addGovernmentUser", (req, res, next) => {
+    GovernmentUser.find({ identifiant: req.body.identifiant })
     .exec()
-    .then(gouvernmentUser => {
-      if (gouvernmentUser.length >= 1) {
+    .then(governmentUser => {
+      if (governmentUser.length >= 1) {
         return res.status(409).json({
           message: "Mail exists"
         });
@@ -89,14 +89,14 @@ router.get("/CustomUser", (req, res, next) => {
               error: err
             });
           } else {
-            const gouvernmentUser = new GouvernmentUser({
+            const governmentUser = new GovernmentUser({
               _id: new mongoose.Types.ObjectId(),
               identifiant: req.body.identifiant,
               password: hash,
               countryCode: req.body.countryCode,
               admin: req.body.admin
             });
-            gouvernmentUser
+            governmentUser
               .save()
               .then(result => {
                 console.log(result);
@@ -116,14 +116,14 @@ router.get("/CustomUser", (req, res, next) => {
     });
 });
 
-router.get("/GouvernmentUser", (req, res, next) => {
-    GouvernmentUser.find()
+router.get("/GovernmentUser", (req, res, next) => {
+    GovernmentUser.find()
       .select("_id identifiant password countryCode")
       .exec()
       .then(docs => {
         const response = {
           count: docs.length,
-          GouvernmentUser: docs.map(doc => {
+          GovernmentUser: docs.map(doc => {
             return {
                 identifiant: doc.identifiant,
                 password: doc.password,

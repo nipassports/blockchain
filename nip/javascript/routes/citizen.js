@@ -1,8 +1,10 @@
 // eslint-disable-next-line strict
 const express = require('express');
 const jwt = require("jsonwebtoken");
+const moment = require('moment');
 const router = express.Router();
 const checkAuthCitizen = require('../middleware/check-auth.js');
+const problem = require('../models/problem.js');
 
 const JWT_KEY = "secret";
 
@@ -48,6 +50,33 @@ router.post('/auth', (req, res, next) => {
         error: err
       });
     });
+});
+
+
+router.post('/problem', (req, res, next) => {
+    const problem=new problem({
+        _id: new mongoose.Types.ObjectId(), 
+        passNb : res.locals.passNb,
+        message : req.body.message,
+        type : req.body.type,
+        date : moment().format('DD/MM/YYYY at HH:mm'),
+        author : 0,
+        status : 0
+        });
+        problem
+        .save()
+        .then(result => {
+            console.log(result);
+            res.status(201).json({
+              message: "Problem sent"
+            });
+          })
+        .catch(err => {
+          console.log(err);
+          res.status(500).json({
+            error: err
+          });
+        });  
 });
 
 
