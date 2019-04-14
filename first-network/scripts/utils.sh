@@ -119,7 +119,7 @@ installChaincode() {
   setGlobals $PEER $ORG
   VERSION=${3:-1.0}
   set -x
-  peer chaincode install -n mycc -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH} >&log.txt
+  peer chaincode install -n passport -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH} >&log.txt
   peer chaincode install -n visa -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH2} >&log.txt
   res=$?
   set +x
@@ -140,12 +140,12 @@ instantiateChaincode() {
   # the "-o" option
   if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
     set -x
-    peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n mycc -l ${LANGUAGE} -v ${VERSION} -c '{"Args":[]}' -P "OR ('Org1MSP.member','Org2MSP.member','Org3MSP.member')" >&log.txt
+    peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n passport -l ${LANGUAGE} -v ${VERSION} -c '{"Args":[]}' -P "OR ('Org1MSP.member','Org2MSP.member','Org3MSP.member')" >&log.txt
     res=$?
     set +x
   else
     set -x
-    peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -l ${LANGUAGE} -v ${VERSION} -c '{"Args":[]}' -P "OR ('Org1MSP.peer','Org2MSP.peer', 'Org3MSP.peer')" >&log.txt
+    peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n passport -l ${LANGUAGE} -v ${VERSION} -c '{"Args":[]}' -P "OR ('Org1MSP.peer','Org2MSP.peer', 'Org3MSP.peer')" >&log.txt
     peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n visa -l ${LANGUAGE} -v ${VERSION} -c '{"Args":[]}' -P "OR ('Org1MSP.peer','Org2MSP.peer', 'Org3MSP.peer')" >&log.txt
     res=$?
     set +x
@@ -162,7 +162,7 @@ upgradeChaincode() {
   setGlobals $PEER $ORG
 
   set -x
-  peer chaincode upgrade -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 2.0 -c '{"Args":[]}' -P "AND ('Org1MSP.member','Org2MSP.member','Org3MSP.member')"
+  peer chaincode upgrade -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n passport -v 2.0 -c '{"Args":[]}' -P "AND ('Org1MSP.member','Org2MSP.member','Org3MSP.member')"
   res=$?
   set +x
   cat log.txt
@@ -187,7 +187,7 @@ chaincodeQuery() {
     sleep $DELAY
     echo "Attempting to Query peer${PEER}.org${ORG} ...$(($(date +%s) - starttime)) secs"
     set -x
-    peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["queryAllPassports"]}' >&log.txt
+    peer chaincode query -C $CHANNEL_NAME -n passport -c '{"Args":["queryAllPassports"]}' >&log.txt
     res=$?
     set +x
     # test $res -eq 0 && VALUE=$(cat log.txt | awk '/Query Result/ {print $NF}')
@@ -298,13 +298,13 @@ chaincodeInvoke() {
   # it using the "-o" option
   if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
     set -x
-    peer chaincode invoke -o orderer.example.com:7050 -C $CHANNEL_NAME -n mycc $PEER_CONN_PARMS -c chaincode invoke -o orderer.example.com:7050 -C mychannel -n mycc -c '{"Args":["initLedger"]}' >&log.txt
+    peer chaincode invoke -o orderer.example.com:7050 -C $CHANNEL_NAME -n passport $PEER_CONN_PARMS -c chaincode invoke -o orderer.example.com:7050 -C mychannel -n passport -c '{"Args":["initLedger"]}' >&log.txt
     res=$?
     set +x
   else
     set -x
-    peer chaincode invoke -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc $PEER_CONN_PARMS -c chaincode invoke -o orderer.example.com:7050 -C mychannel -n mycc -c '{"Args":["initLedger"]}' >&log.txt
-    peer chaincode invoke -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc $PEER_CONN_PARMS -c chaincode invoke -o orderer.example.com:7050 -C mychannel -n visa -c '{"Args":["initLedger"]}' >&log.txt
+    peer chaincode invoke -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n passport $PEER_CONN_PARMS -c chaincode invoke -o orderer.example.com:7050 -C mychannel -n passport -c '{"Args":["initLedger"]}' >&log.txt
+    peer chaincode invoke -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n visa $PEER_CONN_PARMS -c chaincode invoke -o orderer.example.com:7050 -C mychannel -n visa -c '{"Args":["initLedger"]}' >&log.txt
     res=$?
     set +x
   fi

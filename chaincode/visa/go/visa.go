@@ -17,11 +17,6 @@
  * under the License.
  */
 
-/*
- * The sample smart contract for documentation topic:
- * Writing Your First Blockchain Application
- */
-
 package main
 
 /* Imports
@@ -55,12 +50,12 @@ type Visa struct {
 	Validity        string `json:"validity"`
 	ValidFor        string `json:"validFor"`
 	NumberOfEntries string `json:"numberOfEntries"`
-	DurationOfStay  string `json:"durationOfStay "`
+	DurationOfStay  string `json:"durationOfStay"`
 	Remarks         string `json:"remarks"`
 }
 
 /*
- * The Init method is called when the Smart Contract "fabcar" is instantiated by the blockchain network
+ * The Init method is called when the Smart Contract is instantiated by the blockchain network
  * Best practice is to have any Ledger initialization in separate function -- see initLedger()
  */
 func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
@@ -68,7 +63,7 @@ func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
 }
 
 /*
- * The Invoke method is called as a result of an application request to run the Smart Contract "fabcar"
+ * The Invoke method is called as a result of an application request to run the Smart Contract
  * The calling application program has also specified the particular smart contract function to be called, with arguments
  */
 func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response {
@@ -107,9 +102,9 @@ func (s *SmartContract) queryVisa(APIstub shim.ChaincodeStubInterface, args []st
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 
 	visas := []Visa{
-		Visa{Type: "P", VisaCode: "1230013", PassNb: "14ML52147", Name: "Jean", Surname: "Dupont", Autority: "FRA", DateOfExpiry: "16/09/2025", DateOfIssue: "16/09/2018", PlaceOfIssue: "Toulouse", Validity: "valid", ValidFor: "SCHENGEN ", NumberOfEntries: "MULT", DurationOfStay: "30", Remarks: "CESSEDA R313-3 1"},
-		Visa{Type: "P", VisaCode: "9872837", PassNb: "14ML54147", Name: "Jerome", Surname: "Dupont", Autority: "FRA", DateOfExpiry: "16/09/2022", DateOfIssue: "16/09/2018", PlaceOfIssue: "Toulouse", Validity: "valid", ValidFor: "SCHENGEN ", NumberOfEntries: "MULT", DurationOfStay: "400", Remarks: "CESSEDA R313-3 1"},
-		Visa{Type: "P", VisaCode: "1982982", PassNb: "14ML52557", Name: "Julien", Surname: "Dupont", Autority: "FRA", DateOfExpiry: "16/09/2023", DateOfIssue: "16/09/2018", PlaceOfIssue: "Toulouse", Validity: "valid", ValidFor: "SCHENGEN", NumberOfEntries: "MULT", DurationOfStay: "200", Remarks: "CESSEDA R313-3 1"},
+		Visa{Type: "P", VisaCode: "1230013", PassNb: "14ML52147", Name: "Jean", Surname: "Dupont", Autority: "FRA", DateOfExpiry: "16/09/2025", DateOfIssue: "16/09/2018", PlaceOfIssue: "Toulouse", Validity: "Valide", ValidFor: "SCHENGEN ", NumberOfEntries: "MULT", DurationOfStay: "30", Remarks: "CESSEDA R313-3 1"},
+		Visa{Type: "P", VisaCode: "9872837", PassNb: "14ML22389", Name: "Brad", Surname: "Dupont", Autority: "FRA", DateOfExpiry: "16/09/2022", DateOfIssue: "16/09/2018", PlaceOfIssue: "Toulouse", Validity: "Valide", ValidFor: "SCHENGEN ", NumberOfEntries: "MULT", DurationOfStay: "400", Remarks: "CESSEDA R313-3 1"},
+		Visa{Type: "P", VisaCode: "1982982", PassNb: "14ML22389", Name: "Brad", Surname: "Dupont", Autority: "FRA", DateOfExpiry: "16/09/2023", DateOfIssue: "16/09/2018", PlaceOfIssue: "Toulouse", Validity: "Valide", ValidFor: "SCHENGEN", NumberOfEntries: "MULT", DurationOfStay: "200", Remarks: "CESSEDA R313-3 1"},
 	}
 
 	i := 0

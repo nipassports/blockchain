@@ -36,7 +36,7 @@ async function main() {
         const network = await gateway.getNetwork('mychannel');
 
         // Get the contract from the network.
-      //  const contract = network.getContract('mycc');
+      //  const contract = network.getContract('passport');
          const contract = await network.getContract('visa');
 
         // Submit the specified transaction.
