@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const problemSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    PassNb: { 
+    passNb: { 
         type: String, 
         required: true   
     },
@@ -33,4 +33,4 @@ const problemSchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('problemUser' , problemSchema );
+module.exports = mongoose.model('problem', problemSchema );

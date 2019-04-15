@@ -3,6 +3,7 @@ const express = require('express');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const router = express.Router();
+const mongoose = require("mongoose");
 const checkAuth = require('../middleware/check-authGovernment');
 const JWT_KEY = "secret-government";
 
@@ -13,6 +14,7 @@ const promiseVisa = smartContract(3,'visa');
 var randomItem = require('random-item');
 var randomstring = require("randomstring");
 var hash = require('object-hash');
+const Problem = require('../models/problem');
 const GovernmentUser = require('../models/governmentUser');
 
 
@@ -68,8 +70,9 @@ router.post("/auth", (req, res, next) => {
 
 router.get('/problems/all/:countryCode', (req, res, next) => {
   const countryCode = req.params.countryCode;
-  problem.find({ countryCode: countryCode})
-    .then(item => (item) ? res.status(201).json(item) : res.status(250).json({ message: "no problems declared " }))
+  console.log(countryCode);
+  Problem.find({ countryCode: countryCode}).sort({ date : -1 }).limit(10)
+    .then(problem => (problem) ? res.status(201).json(problem) : res.status(250).json({ message: "no problems declared " }))
     .catch(err => console.log("err" + err))
 })
 

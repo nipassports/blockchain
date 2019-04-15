@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const moment = require("moment");
 const router = express.Router();
+const mongoose = require("mongoose");
 const checkAuth = require('../middleware/check-authCustom.js');
-const problem = require('../models/problem.js')
 const JWT_KEY = "secret-custom";
 
 const smartContract = require('../smartContract.js');
@@ -14,6 +14,7 @@ const promiseVisa = smartContract(2,'visa');
 
 var hash = require('object-hash');
 
+const Problem = require('../models/problem')
 const CustomUser = require('../models/customUser');
 
 router.post("/auth", (req, res, next) => {
@@ -75,16 +76,16 @@ router.get('/passport' ,checkAuth,  (req, res, next)=>{
 
 
 
-router.post('/problem_custom', (req, res, next) => {
-  const problem=new problem({
+router.post('/problem', (req, res, next) => {
+  const problem=new Problem({
       _id: new mongoose.Types.ObjectId(), 
-      passNb : res.body.passNb,
+      passNb : req.body.passNb,
       message : req.body.message,
-      countryCode : req.body.message,
+      countryCode : req.body.countryCode,
       type : req.body.type,
       date : moment().format('DD/MM/YYYY at HH:mm'),
       author : 1,
-      status : 0
+      status : 'new'
       });
       problem
       .save()
