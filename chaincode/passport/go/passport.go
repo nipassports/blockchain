@@ -99,7 +99,10 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.searchPassportByCountry(APIstub, args)
 	} else if function == "changePassportValidity" {
 		return s.changePassportValidity(APIstub, args)
+	} else if function == "changePassword" {
+		return s.changePassword(APIstub, args)
 	}
+
 	return shim.Error("Invalid Smart Contract function name.")
 }
 
@@ -371,6 +374,28 @@ func (s *SmartContract) changePassport(APIstub shim.ChaincodeStubInterface, args
 	passport.Image = args[17]
 	passportAsBytes, _ = json.Marshal(passport)
 	APIstub.PutState(key, passportAsBytes)
+	return shim.Success(nil)
+}
+
+func (s *SmartContract) changePassword(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 2 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
+	}
+
+	key, err := getKeybyPAssnum(APIstub, args[0])
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	passportAsBytes, _ := APIstub.GetState(key)
+	passport := Passport{}
+
+	json.Unmarshal(passportAsBytes, &passport)
+	passport.Password = args[1]
+
+	passportAsBytes, _ = json.Marshal(passport)
+	APIstub.PutState(key, passportAsBytes)
+
 	return shim.Success(nil)
 }
 

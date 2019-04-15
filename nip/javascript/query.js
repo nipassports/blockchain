@@ -41,8 +41,10 @@ async function main() {
 
         // Evaluate the specified transaction.
         // const result1 = await contract.evaluateTransaction('queryAllVisas');
-        const result1 = await contract.evaluateTransaction('querykeybyPassNb','14ML52147');
+        //const result1 = await contract.evaluateTransaction('querykeybyPassNb','14ML52147');
         // const result1 = await contract.evaluateTransaction('searchPassportByCountry', 'FR');
+        const result1 = await contract.evaluateTransaction('queryAllPassports');
+        //const result1 = await contract.evaluateTransaction('changePassword', '14ML52147');
 
         console.log(`Transaction has been evaluated, result is: ${result1.toString()}\n`);
 
