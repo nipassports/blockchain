@@ -23,7 +23,7 @@ rm -rf *
 
 cd ../..
 
-cd ../first-network
+cd ../nip-network
 ./byfn.sh down
 ./byfn.sh up
 

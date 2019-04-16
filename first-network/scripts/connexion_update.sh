@@ -80,10 +80,10 @@ echo "{
                 \"ca.org1.nip.ddns.net\"
             ],
             \"adminPrivateKey\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org1.nip.ddns.net/users/Admin@org1.nip.ddns.net/msp/keystore/$KEYORG1\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org1.nip.ddns.net/users/Admin@org1.nip.ddns.net/msp/keystore/$KEYORG1\"
             },
             \"signedCert\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org1.nip.ddns.net/users/Admin@org1.nip.ddns.net/msp/signcerts/Admin@org1.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org1.nip.ddns.net/users/Admin@org1.nip.ddns.net/msp/signcerts/Admin@org1.nip.ddns.net-cert.pem\"
             }
         },
         \"Org2\": {
@@ -96,10 +96,10 @@ echo "{
                 \"ca.org2.nip.ddns.net\"
             ],
             \"adminPrivateKey\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.nip.ddns.net/users/Admin@org2.nip.ddns.net/msp/keystore/$KEYORG2\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org2.nip.ddns.net/users/Admin@org2.nip.ddns.net/msp/keystore/$KEYORG2\"
             },
             \"signedCert\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.nip.ddns.net/users/Admin@org2.nip.ddns.net/msp/signcerts/Admin@org2.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org2.nip.ddns.net/users/Admin@org2.nip.ddns.net/msp/signcerts/Admin@org2.nip.ddns.net-cert.pem\"
             }
         },
         \"Org3\": {
@@ -112,10 +112,10 @@ echo "{
                 \"ca.org3.nip.ddns.net\"
             ],
             \"adminPrivateKey\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.nip.ddns.net/users/Admin@org3.nip.ddns.net/msp/keystore/$KEYORG3\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org3.nip.ddns.net/users/Admin@org3.nip.ddns.net/msp/keystore/$KEYORG3\"
             },
             \"signedCert\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.nip.ddns.net/users/Admin@org3.nip.ddns.net/msp/signcerts/Admin@org3.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org3.nip.ddns.net/users/Admin@org3.nip.ddns.net/msp/signcerts/Admin@org3.nip.ddns.net-cert.pem\"
             }
         }
     },
@@ -126,7 +126,7 @@ echo "{
                 \"ssl-target-name-override\": \"orderer.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/ordererOrganizations/nip.ddns.net/tlsca/tlsca.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/ordererOrganizations/nip.ddns.net/tlsca/tlsca.nip.ddns.net-cert.pem\"
             }
         }
     },
@@ -138,7 +138,7 @@ echo "{
                 \"ssl-target-name-override\": \"peer0.org1.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org1.nip.ddns.net/tlsca/tlsca.org1.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org1.nip.ddns.net/tlsca/tlsca.org1.nip.ddns.net-cert.pem\"
             }
         },
         \"peer1.org1.nip.ddns.net\": {
@@ -148,7 +148,7 @@ echo "{
                 \"ssl-target-name-override\": \"peer1.org1.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org1.nip.ddns.net/tlsca/tlsca.org1.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org1.nip.ddns.net/tlsca/tlsca.org1.nip.ddns.net-cert.pem\"
             }
         },
         \"peer0.org2.nip.ddns.net\": {
@@ -158,7 +158,7 @@ echo "{
                 \"ssl-target-name-override\": \"peer0.org2.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.nip.ddns.net/tlsca/tlsca.org2.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org2.nip.ddns.net/tlsca/tlsca.org2.nip.ddns.net-cert.pem\"
             }
         },
         \"peer1.org2.nip.ddns.net\": {
@@ -168,7 +168,7 @@ echo "{
                 \"ssl-target-name-override\": \"peer1.org2.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.nip.ddns.net/tlsca/tlsca.org2.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org2.nip.ddns.net/tlsca/tlsca.org2.nip.ddns.net-cert.pem\"
             }
         },
         \"peer0.org3.nip.ddns.net\": {
@@ -178,7 +178,7 @@ echo "{
                 \"ssl-target-name-override\": \"peer0.org3.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.nip.ddns.net/tlsca/tlsca.org3.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org3.nip.ddns.net/tlsca/tlsca.org3.nip.ddns.net-cert.pem\"
             }
         },
         \"peer1.org3.nip.ddns.net\": {
@@ -188,7 +188,7 @@ echo "{
                 \"ssl-target-name-override\": \"peer1.org3.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.nip.ddns.net/tlsca/tlsca.org3.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org3.nip.ddns.net/tlsca/tlsca.org3.nip.ddns.net-cert.pem\"
             }
         }
     },
@@ -200,7 +200,7 @@ echo "{
                 \"verify\": false
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org1.nip.ddns.net/ca/ca.org1.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org1.nip.ddns.net/ca/ca.org1.nip.ddns.net-cert.pem\"
             }
 
         },
@@ -211,7 +211,7 @@ echo "{
                 \"verify\": false
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.nip.ddns.net/ca/ca.org2.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org2.nip.ddns.net/ca/ca.org2.nip.ddns.net-cert.pem\"
             }
         },
         \"ca.org3.nip.ddns.net\": {
@@ -221,7 +221,7 @@ echo "{
                 \"verify\": false
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.nip.ddns.net/ca/ca.org3.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org3.nip.ddns.net/ca/ca.org3.nip.ddns.net-cert.pem\"
             }
 
         }
@@ -303,10 +303,10 @@ echo  "{
                 \"ca.org1.nip.ddns.net\"
             ],
             \"adminPrivateKey\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org1.nip.ddns.net/users/Admin@org1.nip.ddns.net/msp/keystore/$KEYORG1\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org1.nip.ddns.net/users/Admin@org1.nip.ddns.net/msp/keystore/$KEYORG1\"
             },
             \"signedCert\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org1.nip.ddns.net/users/Admin@org1.nip.ddns.net/msp/signcerts/Admin@org1.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org1.nip.ddns.net/users/Admin@org1.nip.ddns.net/msp/signcerts/Admin@org1.nip.ddns.net-cert.pem\"
             }
         },
         \"Org2\": {
@@ -319,10 +319,10 @@ echo  "{
                 \"ca.org2.nip.ddns.net\"
             ],
             \"adminPrivateKey\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.nip.ddns.net/users/Admin@org2.nip.ddns.net/msp/keystore/$KEYORG2\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org2.nip.ddns.net/users/Admin@org2.nip.ddns.net/msp/keystore/$KEYORG2\"
             },
             \"signedCert\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.nip.ddns.net/users/Admin@org2.nip.ddns.net/msp/signcerts/Admin@org2.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org2.nip.ddns.net/users/Admin@org2.nip.ddns.net/msp/signcerts/Admin@org2.nip.ddns.net-cert.pem\"
             }
         },
         \"Org3\": {
@@ -335,10 +335,10 @@ echo  "{
                 \"ca.org3.nip.ddns.net\"
             ],
             \"adminPrivateKey\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.nip.ddns.net/users/Admin@org3.nip.ddns.net/msp/keystore/$KEYORG3\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org3.nip.ddns.net/users/Admin@org3.nip.ddns.net/msp/keystore/$KEYORG3\"
             },
             \"signedCert\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.nip.ddns.net/users/Admin@org3.nip.ddns.net/msp/signcerts/Admin@org3.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org3.nip.ddns.net/users/Admin@org3.nip.ddns.net/msp/signcerts/Admin@org3.nip.ddns.net-cert.pem\"
             }
         }
     },
@@ -349,7 +349,7 @@ echo  "{
                 \"ssl-target-name-override\": \"orderer.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/ordererOrganizations/nip.ddns.net/tlsca/tlsca.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/ordererOrganizations/nip.ddns.net/tlsca/tlsca.nip.ddns.net-cert.pem\"
             }
         }
     },
@@ -361,7 +361,7 @@ echo  "{
                 \"ssl-target-name-override\": \"peer0.org1.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org1.nip.ddns.net/tlsca/tlsca.org1.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org1.nip.ddns.net/tlsca/tlsca.org1.nip.ddns.net-cert.pem\"
             }
         },
         \"peer1.org1.nip.ddns.net\": {
@@ -371,7 +371,7 @@ echo  "{
                 \"ssl-target-name-override\": \"peer1.org1.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org1.nip.ddns.net/tlsca/tlsca.org1.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org1.nip.ddns.net/tlsca/tlsca.org1.nip.ddns.net-cert.pem\"
             }
         },
         \"peer0.org2.nip.ddns.net\": {
@@ -381,7 +381,7 @@ echo  "{
                 \"ssl-target-name-override\": \"peer0.org2.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.nip.ddns.net/tlsca/tlsca.org2.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org2.nip.ddns.net/tlsca/tlsca.org2.nip.ddns.net-cert.pem\"
             }
         },
         \"peer1.org2.nip.ddns.net\": {
@@ -391,7 +391,7 @@ echo  "{
                 \"ssl-target-name-override\": \"peer1.org2.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.nip.ddns.net/tlsca/tlsca.org2.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org2.nip.ddns.net/tlsca/tlsca.org2.nip.ddns.net-cert.pem\"
             }
         },
         \"peer0.org3.nip.ddns.net\": {
@@ -401,7 +401,7 @@ echo  "{
                 \"ssl-target-name-override\": \"peer0.org3.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.nip.ddns.net/tlsca/tlsca.org3.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org3.nip.ddns.net/tlsca/tlsca.org3.nip.ddns.net-cert.pem\"
             }
         },
         \"peer1.org3.nip.ddns.net\": {
@@ -411,7 +411,7 @@ echo  "{
                 \"ssl-target-name-override\": \"peer1.org3.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.nip.ddns.net/tlsca/tlsca.org3.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org3.nip.ddns.net/tlsca/tlsca.org3.nip.ddns.net-cert.pem\"
             }
         }
     },
@@ -423,7 +423,7 @@ echo  "{
                 \"verify\": false
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org1.nip.ddns.net/ca/ca.org1.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org1.nip.ddns.net/ca/ca.org1.nip.ddns.net-cert.pem\"
             }
 
         },
@@ -434,7 +434,7 @@ echo  "{
                 \"verify\": false
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.nip.ddns.net/ca/ca.org2.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org2.nip.ddns.net/ca/ca.org2.nip.ddns.net-cert.pem\"
             }
         },
         \"ca.org3.nip.ddns.net\": {
@@ -444,7 +444,7 @@ echo  "{
                 \"verify\": false
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.nip.ddns.net/ca/ca.org3.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org3.nip.ddns.net/ca/ca.org3.nip.ddns.net-cert.pem\"
             }
 
         }
@@ -525,10 +525,10 @@ echo  "{
                 \"ca.org1.nip.ddns.net\"
             ],
             \"adminPrivateKey\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org1.nip.ddns.net/users/Admin@org1.nip.ddns.net/msp/keystore/$KEYORG1\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org1.nip.ddns.net/users/Admin@org1.nip.ddns.net/msp/keystore/$KEYORG1\"
             },
             \"signedCert\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org1.nip.ddns.net/users/Admin@org1.nip.ddns.net/msp/signcerts/Admin@org1.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org1.nip.ddns.net/users/Admin@org1.nip.ddns.net/msp/signcerts/Admin@org1.nip.ddns.net-cert.pem\"
             }
         },
         \"Org2\": {
@@ -541,10 +541,10 @@ echo  "{
                 \"ca.org2.nip.ddns.net\"
             ],
             \"adminPrivateKey\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.nip.ddns.net/users/Admin@org2.nip.ddns.net/msp/keystore/$KEYORG2\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org2.nip.ddns.net/users/Admin@org2.nip.ddns.net/msp/keystore/$KEYORG2\"
             },
             \"signedCert\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.nip.ddns.net/users/Admin@org2.nip.ddns.net/msp/signcerts/Admin@org2.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org2.nip.ddns.net/users/Admin@org2.nip.ddns.net/msp/signcerts/Admin@org2.nip.ddns.net-cert.pem\"
             }
         },
         \"Org3\": {
@@ -557,10 +557,10 @@ echo  "{
                 \"ca.org3.nip.ddns.net\"
             ],
             \"adminPrivateKey\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.nip.ddns.net/users/Admin@org3.nip.ddns.net/msp/keystore/$KEYORG3\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org3.nip.ddns.net/users/Admin@org3.nip.ddns.net/msp/keystore/$KEYORG3\"
             },
             \"signedCert\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.nip.ddns.net/users/Admin@org3.nip.ddns.net/msp/signcerts/Admin@org3.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org3.nip.ddns.net/users/Admin@org3.nip.ddns.net/msp/signcerts/Admin@org3.nip.ddns.net-cert.pem\"
             }
         }
     },
@@ -571,7 +571,7 @@ echo  "{
                 \"ssl-target-name-override\": \"orderer.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/ordererOrganizations/nip.ddns.net/tlsca/tlsca.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/ordererOrganizations/nip.ddns.net/tlsca/tlsca.nip.ddns.net-cert.pem\"
             }
         }
     },
@@ -583,7 +583,7 @@ echo  "{
                 \"ssl-target-name-override\": \"peer0.org1.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org1.nip.ddns.net/tlsca/tlsca.org1.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org1.nip.ddns.net/tlsca/tlsca.org1.nip.ddns.net-cert.pem\"
             }
         },
         \"peer1.org1.nip.ddns.net\": {
@@ -593,7 +593,7 @@ echo  "{
                 \"ssl-target-name-override\": \"peer1.org1.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org1.nip.ddns.net/tlsca/tlsca.org1.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org1.nip.ddns.net/tlsca/tlsca.org1.nip.ddns.net-cert.pem\"
             }
         },
         \"peer0.org2.nip.ddns.net\": {
@@ -603,7 +603,7 @@ echo  "{
                 \"ssl-target-name-override\": \"peer0.org2.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.nip.ddns.net/tlsca/tlsca.org2.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org2.nip.ddns.net/tlsca/tlsca.org2.nip.ddns.net-cert.pem\"
             }
         },
         \"peer1.org2.nip.ddns.net\": {
@@ -613,7 +613,7 @@ echo  "{
                 \"ssl-target-name-override\": \"peer1.org2.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.nip.ddns.net/tlsca/tlsca.org2.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org2.nip.ddns.net/tlsca/tlsca.org2.nip.ddns.net-cert.pem\"
             }
         },
         \"peer0.org3.nip.ddns.net\": {
@@ -623,7 +623,7 @@ echo  "{
                 \"ssl-target-name-override\": \"peer0.org3.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.nip.ddns.net/tlsca/tlsca.org3.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org3.nip.ddns.net/tlsca/tlsca.org3.nip.ddns.net-cert.pem\"
             }
         },
         \"peer1.org3.nip.ddns.net\": {
@@ -633,7 +633,7 @@ echo  "{
                 \"ssl-target-name-override\": \"peer1.org3.nip.ddns.net\"
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.nip.ddns.net/tlsca/tlsca.org3.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org3.nip.ddns.net/tlsca/tlsca.org3.nip.ddns.net-cert.pem\"
             }
         }
     },
@@ -645,7 +645,7 @@ echo  "{
                 \"verify\": false
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org1.nip.ddns.net/ca/ca.org1.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org1.nip.ddns.net/ca/ca.org1.nip.ddns.net-cert.pem\"
             }
 
         },
@@ -656,7 +656,7 @@ echo  "{
                 \"verify\": false
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org2.nip.ddns.net/ca/ca.org2.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org2.nip.ddns.net/ca/ca.org2.nip.ddns.net-cert.pem\"
             }
         },
         \"ca.org3.nip.ddns.net\": {
@@ -666,7 +666,7 @@ echo  "{
                 \"verify\": false
             },
             \"tlsCACerts\": {
-                \"path\": \"../../first-network/crypto-config/peerOrganizations/org3.nip.ddns.net/ca/ca.org3.nip.ddns.net-cert.pem\"
+                \"path\": \"../../nip-network/crypto-config/peerOrganizations/org3.nip.ddns.net/ca/ca.org3.nip.ddns.net-cert.pem\"
             }
 
         }

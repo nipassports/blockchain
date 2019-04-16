@@ -13,7 +13,7 @@ const path = require('path');
 async function enrolladmin(orgnum, enrollmentid,enrollmentsecret){
   try {
 
-    const ccpPath = path.resolve(__dirname, '..', '..', 'first-network', 'connection'+orgnum+'.json');
+    const ccpPath = path.resolve(__dirname, '..', '..', 'nip-network', 'connection'+orgnum+'.json');
     const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
     const ccp = JSON.parse(ccpJSON);
 
