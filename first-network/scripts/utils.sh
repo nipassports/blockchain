@@ -6,10 +6,10 @@
 
 # This is a collection of bash functions used by different scripts
 
-ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
-PEER0_ORG1_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
-PEER0_ORG2_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
-PEER0_ORG3_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/tls/ca.crt
+ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/nip.ddns.net/orderers/orderer.nip.ddns.net/msp/tlscacerts/tlsca.nip.ddns.net-cert.pem
+PEER0_ORG1_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.nip.ddns.net/peers/peer0.org1.nip.ddns.net/tls/ca.crt
+PEER0_ORG2_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.nip.ddns.net/peers/peer0.org2.nip.ddns.net/tls/ca.crt
+PEER0_ORG3_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.nip.ddns.net/peers/peer0.org3.nip.ddns.net/tls/ca.crt
 
 # verify the result of the end-to-end test
 verifyResult() {
@@ -24,8 +24,8 @@ verifyResult() {
 # Set OrdererOrg.Admin globals
 setOrdererGlobals() {
   CORE_PEER_LOCALMSPID="OrdererMSP"
-  CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
-  CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/users/Admin@example.com/msp
+  CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/nip.ddns.net/orderers/orderer.nip.ddns.net/msp/tlscacerts/tlsca.nip.ddns.net-cert.pem
+  CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/nip.ddns.net/users/Admin@nip.ddns.net/msp
 }
 
 setGlobals() {
@@ -34,30 +34,30 @@ setGlobals() {
   if [ $ORG -eq 1 ]; then
     CORE_PEER_LOCALMSPID="Org1MSP"
     CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG1_CA
-    CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+    CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.nip.ddns.net/users/Admin@org1.nip.ddns.net/msp
     if [ $PEER -eq 0 ]; then
-      CORE_PEER_ADDRESS=peer0.org1.example.com:7051
+      CORE_PEER_ADDRESS=peer0.org1.nip.ddns.net:7051
     else
-      CORE_PEER_ADDRESS=peer1.org1.example.com:7051
+      CORE_PEER_ADDRESS=peer1.org1.nip.ddns.net:7051
     fi
   elif [ $ORG -eq 2 ]; then
     CORE_PEER_LOCALMSPID="Org2MSP"
     CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG2_CA
-    CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
+    CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.nip.ddns.net/users/Admin@org2.nip.ddns.net/msp
     if [ $PEER -eq 0 ]; then
-      CORE_PEER_ADDRESS=peer0.org2.example.com:7051
+      CORE_PEER_ADDRESS=peer0.org2.nip.ddns.net:7051
     else
-      CORE_PEER_ADDRESS=peer1.org2.example.com:7051
+      CORE_PEER_ADDRESS=peer1.org2.nip.ddns.net:7051
     fi
 
   elif [ $ORG -eq 3 ]; then
     CORE_PEER_LOCALMSPID="Org3MSP"
     CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG3_CA
-    CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp
+    CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.nip.ddns.net/users/Admin@org3.nip.ddns.net/msp
     if [ $PEER -eq 0 ]; then
-      CORE_PEER_ADDRESS=peer0.org3.example.com:7051
+      CORE_PEER_ADDRESS=peer0.org3.nip.ddns.net:7051
     else
-      CORE_PEER_ADDRESS=peer1.org3.example.com:7051
+      CORE_PEER_ADDRESS=peer1.org3.nip.ddns.net:7051
     fi
   else
     echo "================== ERROR !!! ORG Unknown =================="
@@ -75,12 +75,12 @@ updateAnchorPeers() {
 
   if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
     set -x
-    peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx >&log.txt
+    peer channel update -o orderer.nip.ddns.net:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx >&log.txt
     res=$?
     set +x
   else
     set -x
-    peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt
+    peer channel update -o orderer.nip.ddns.net:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt
     res=$?
     set +x
   fi
@@ -140,13 +140,13 @@ instantiateChaincode() {
   # the "-o" option
   if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
     set -x
-    peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n passport -l ${LANGUAGE} -v ${VERSION} -c '{"Args":[]}' -P "OR ('Org1MSP.member','Org2MSP.member','Org3MSP.member')" >&log.txt
+    peer chaincode instantiate -o orderer.nip.ddns.net:7050 -C $CHANNEL_NAME -n passport -l ${LANGUAGE} -v ${VERSION} -c '{"Args":[]}' -P "OR ('Org1MSP.member','Org2MSP.member','Org3MSP.member')" >&log.txt
     res=$?
     set +x
   else
     set -x
-    peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n passport -l ${LANGUAGE} -v ${VERSION} -c '{"Args":[]}' -P "OR ('Org1MSP.peer','Org2MSP.peer', 'Org3MSP.peer')" >&log.txt
-    peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n visa -l ${LANGUAGE} -v ${VERSION} -c '{"Args":[]}' -P "OR ('Org1MSP.peer','Org2MSP.peer', 'Org3MSP.peer')" >&log.txt
+    peer chaincode instantiate -o orderer.nip.ddns.net:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n passport -l ${LANGUAGE} -v ${VERSION} -c '{"Args":[]}' -P "OR ('Org1MSP.peer','Org2MSP.peer', 'Org3MSP.peer')" >&log.txt
+    peer chaincode instantiate -o orderer.nip.ddns.net:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n visa -l ${LANGUAGE} -v ${VERSION} -c '{"Args":[]}' -P "OR ('Org1MSP.peer','Org2MSP.peer', 'Org3MSP.peer')" >&log.txt
     res=$?
     set +x
   fi
@@ -162,7 +162,7 @@ upgradeChaincode() {
   setGlobals $PEER $ORG
 
   set -x
-  peer chaincode upgrade -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n passport -v 2.0 -c '{"Args":[]}' -P "AND ('Org1MSP.member','Org2MSP.member','Org3MSP.member')"
+  peer chaincode upgrade -o orderer.nip.ddns.net:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n passport -v 2.0 -c '{"Args":[]}' -P "AND ('Org1MSP.member','Org2MSP.member','Org3MSP.member')"
   res=$?
   set +x
   cat log.txt
@@ -214,11 +214,11 @@ fetchChannelConfig() {
   echo "Fetching the most recent configuration block for the channel"
   if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
     set -x
-    peer channel fetch config config_block.pb -o orderer.example.com:7050 -c $CHANNEL --cafile $ORDERER_CA
+    peer channel fetch config config_block.pb -o orderer.nip.ddns.net:7050 -c $CHANNEL --cafile $ORDERER_CA
     set +x
   else
     set -x
-    peer channel fetch config config_block.pb -o orderer.example.com:7050 -c $CHANNEL --tls --cafile $ORDERER_CA
+    peer channel fetch config config_block.pb -o orderer.nip.ddns.net:7050 -c $CHANNEL --tls --cafile $ORDERER_CA
     set +x
   fi
 
@@ -273,7 +273,7 @@ parsePeerConnectionParameters() {
   while [ "$#" -gt 0 ]; do
     PEER="peer$1.org$2"
     PEERS="$PEERS $PEER"
-    PEER_CONN_PARMS="$PEER_CONN_PARMS --peerAddresses $PEER.example.com:7051"
+    PEER_CONN_PARMS="$PEER_CONN_PARMS --peerAddresses $PEER.nip.ddns.net:7051"
     if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "true" ]; then
       TLSINFO=$(eval echo "--tlsRootCertFiles \$PEER$1_ORG$2_CA")
       PEER_CONN_PARMS="$PEER_CONN_PARMS $TLSINFO"
@@ -298,13 +298,13 @@ chaincodeInvoke() {
   # it using the "-o" option
   if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
     set -x
-    peer chaincode invoke -o orderer.example.com:7050 -C $CHANNEL_NAME -n passport $PEER_CONN_PARMS -c chaincode invoke -o orderer.example.com:7050 -C mychannel -n passport -c '{"Args":["initLedger"]}' >&log.txt
+    peer chaincode invoke -o orderer.nip.ddns.net:7050 -C $CHANNEL_NAME -n passport $PEER_CONN_PARMS -c chaincode invoke -o orderer.nip.ddns.net:7050 -C mychannel -n passport -c '{"Args":["initLedger"]}' >&log.txt
     res=$?
     set +x
   else
     set -x
-    peer chaincode invoke -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n passport $PEER_CONN_PARMS -c chaincode invoke -o orderer.example.com:7050 -C mychannel -n passport -c '{"Args":["initLedger"]}' >&log.txt
-    peer chaincode invoke -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n visa $PEER_CONN_PARMS -c chaincode invoke -o orderer.example.com:7050 -C mychannel -n visa -c '{"Args":["initLedger"]}' >&log.txt
+    peer chaincode invoke -o orderer.nip.ddns.net:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n passport $PEER_CONN_PARMS -c chaincode invoke -o orderer.nip.ddns.net:7050 -C mychannel -n passport -c '{"Args":["initLedger"]}' >&log.txt
+    peer chaincode invoke -o orderer.nip.ddns.net:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n visa $PEER_CONN_PARMS -c chaincode invoke -o orderer.nip.ddns.net:7050 -C mychannel -n visa -c '{"Args":["initLedger"]}' >&log.txt
     res=$?
     set +x
   fi

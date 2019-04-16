@@ -18,7 +18,7 @@ async function enrolladmin(orgnum, enrollmentid,enrollmentsecret){
     const ccp = JSON.parse(ccpJSON);
 
       // Create a new CA client for interacting with the CA.
-      const caURL = ccp.certificateAuthorities['ca.org'+orgnum+'.example.com'].url;
+      const caURL = ccp.certificateAuthorities['ca.org'+orgnum+'.nip.ddns.net'].url;
       const ca = new FabricCAServices(caURL);
 
       // Create a new file system based wallet for managing identities.

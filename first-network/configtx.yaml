@@ -25,7 +25,7 @@ Organizations:
         ID: OrdererMSP
 
         # MSPDir is the filesystem path which contains the MSP configuration
-        MSPDir: crypto-config/ordererOrganizations/example.com/msp
+        MSPDir: crypto-config/ordererOrganizations/nip.ddns.net/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -49,7 +49,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: Org1MSP
 
-        MSPDir: crypto-config/peerOrganizations/org1.example.com/msp
+        MSPDir: crypto-config/peerOrganizations/org1.nip.ddns.net/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -70,7 +70,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.org1.example.com
+            - Host: peer0.org1.nip.ddns.net
               Port: 7051
 
     - &Org2
@@ -81,7 +81,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: Org2MSP
 
-        MSPDir: crypto-config/peerOrganizations/org2.example.com/msp
+        MSPDir: crypto-config/peerOrganizations/org2.nip.ddns.net/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -101,9 +101,9 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.org2.example.com
+            - Host: peer0.org2.nip.ddns.net
               Port: 7051
-    
+
     - &Org3
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
@@ -112,7 +112,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: Org3MSP
 
-        MSPDir: crypto-config/peerOrganizations/org3.example.com/msp
+        MSPDir: crypto-config/peerOrganizations/org3.nip.ddns.net/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -132,7 +132,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.org3.example.com
+            - Host: peer0.org3.nip.ddns.net
               Port: 7051
 
 ################################################################################
@@ -239,7 +239,7 @@ Orderer: &OrdererDefaults
     OrdererType: solo
 
     Addresses:
-        - orderer.example.com:7050
+        - orderer.nip.ddns.net:7050
 
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s
@@ -367,7 +367,7 @@ Profiles:
             OrdererType: kafka
             Kafka:
                 Brokers:
-                - kafka.example.com:9092
+                - kafka.nip.ddns.net:9092
 
             Organizations:
             - *OrdererOrg
