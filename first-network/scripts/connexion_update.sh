@@ -31,7 +31,7 @@ echo "{
     },
     \"tlsEnable\": true,
     \"channels\": {
-        \"mychannel\": {
+        \"nipchannel\": {
             \"orderers\": [
                 \"orderer.nip.ddns.net\"
             ],
@@ -254,7 +254,7 @@ echo  "{
     },
     \"tlsEnable\": true,
     \"channels\": {
-        \"mychannel\": {
+        \"nipchannel\": {
             \"orderers\": [
                 \"orderer.nip.ddns.net\"
             ],
@@ -476,7 +476,7 @@ echo  "{
     },
     \"tlsEnable\": true,
     \"channels\": {
-        \"mychannel\": {
+        \"nipchannel\": {
             \"orderers\": [
                 \"orderer.nip.ddns.net\"
             ],

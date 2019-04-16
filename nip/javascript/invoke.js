@@ -33,7 +33,7 @@ async function main() {
         await gateway.connect(ccp, { wallet, identity: 'user3', discovery: { enabled: true } });
 
         // Get the network (channel) our contract is deployed to.
-        const network = await gateway.getNetwork('mychannel');
+        const network = await gateway.getNetwork('nipchannel');
 
         // Get the contract from the network.
         const contract = network.getContract('passport');
@@ -45,7 +45,7 @@ async function main() {
         //await contract.submitTransaction('createVisa', 'P', '14ML521497', 'fds', 'Jean', 'Dupont', 'ddf', '16/09/1985', 'France', 'Toulouse','dfs', 'Préfecture de ', 'Avenue des Facultés, 33400 Talence', 'Marron', '16/02/2023');
         await contract.submitTransaction('changePassword','14ML66146', 'okaaaaay');
 
-        
+
         console.log('Transaction has been submitted');
 
         // Disconnect from the gateway.

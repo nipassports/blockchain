@@ -298,13 +298,13 @@ chaincodeInvoke() {
   # it using the "-o" option
   if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
     set -x
-    peer chaincode invoke -o orderer.nip.ddns.net:7050 -C $CHANNEL_NAME -n passport $PEER_CONN_PARMS -c chaincode invoke -o orderer.nip.ddns.net:7050 -C mychannel -n passport -c '{"Args":["initLedger"]}' >&log.txt
+    peer chaincode invoke -o orderer.nip.ddns.net:7050 -C $CHANNEL_NAME -n passport $PEER_CONN_PARMS -c chaincode invoke -o orderer.nip.ddns.net:7050 -C nipchannel -n passport -c '{"Args":["initLedger"]}' >&log.txt
     res=$?
     set +x
   else
     set -x
-    peer chaincode invoke -o orderer.nip.ddns.net:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n passport $PEER_CONN_PARMS -c chaincode invoke -o orderer.nip.ddns.net:7050 -C mychannel -n passport -c '{"Args":["initLedger"]}' >&log.txt
-    peer chaincode invoke -o orderer.nip.ddns.net:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n visa $PEER_CONN_PARMS -c chaincode invoke -o orderer.nip.ddns.net:7050 -C mychannel -n visa -c '{"Args":["initLedger"]}' >&log.txt
+    peer chaincode invoke -o orderer.nip.ddns.net:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n passport $PEER_CONN_PARMS -c chaincode invoke -o orderer.nip.ddns.net:7050 -C nipchannel -n passport -c '{"Args":["initLedger"]}' >&log.txt
+    peer chaincode invoke -o orderer.nip.ddns.net:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n visa $PEER_CONN_PARMS -c chaincode invoke -o orderer.nip.ddns.net:7050 -C nipchannel -n visa -c '{"Args":["initLedger"]}' >&log.txt
     res=$?
     set +x
   fi
