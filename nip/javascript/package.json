@@ -16,7 +16,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "bcrypt": "^3.0.5",
-        "express": "^4.16.4",
+        "express": "^4.17.3",
         "fabric-ca-client": "~1.4.0",
         "fabric-network": "~1.4.0",
         "jsonwebtoken": "^8.5.1",
